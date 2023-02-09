@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDataBaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="stdAddress">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="State" Type="varchar" MaxLength="100" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="stdtbl">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="Class" Type="varchar" MaxLength="100" />
+    <Property Name="RollNo" Type="int" />
+    <Property Name="AddressId" Type="int" />
+  </EntityType>
+  <Association Name="FK__stdtbl__AddressI__38996AB5">
+    <End Role="stdAddress" Type="Self.stdAddress" Multiplicity="0..1" />
+    <End Role="stdtbl" Type="Self.stdtbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="stdAddress">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="stdtbl">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCDataBaseModelStoreContainer">
+    <EntitySet Name="stdAddress" EntityType="Self.stdAddress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="stdtbl" EntityType="Self.stdtbl" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__stdtbl__AddressI__38996AB5" Association="Self.FK__stdtbl__AddressI__38996AB5">
+      <End Role="stdAddress" EntitySet="stdAddress" />
+      <End Role="stdtbl" EntitySet="stdtbl" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

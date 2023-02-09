@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AttendanceManagementdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Countr__3A4CA8FD" FromRole="Country" ToRole="Employee" />
+    <NavigationProperty Name="States" Relationship="Self.FK__State__CountryId__2B0A656D" FromRole="Country" ToRole="State" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Employee_Id" />
+    </Key>
+    <Property Name="Employee_Id" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DateofBirth" Type="DateTime" Precision="0" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PinCode" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contact_No" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="AlternateContact_No" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Email_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Emp_Joining_Date" Type="DateTime" Precision="0" />
+    <Property Name="Marital_status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__Employee__Countr__3A4CA8FD" FromRole="Employee" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="Self.FK__Employee__StateI__3B40CD36" FromRole="Employee" ToRole="State" />
+    <NavigationProperty Name="Emp_Project_Mapping" Relationship="AttendanceManagementdbModel.FK__Emp_Proje__Emplo__5070F446" FromRole="Employee" ToRole="Emp_Project_Mapping" />
+    <NavigationProperty Name="EmpAttendences" Relationship="AttendanceManagementdbModel.FK__EmpAttend__Emplo__5441852A" FromRole="Employee" ToRole="EmpAttendence" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__State__CountryId__2B0A656D" FromRole="State" ToRole="Country" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__StateI__3B40CD36" FromRole="State" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK__Employee__Countr__3A4CA8FD">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__State__CountryId__2B0A656D">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employee__StateI__3B40CD36">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AttendanceManagementdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <AssociationSet Name="FK__Employee__Countr__3A4CA8FD" Association="Self.FK__Employee__Countr__3A4CA8FD">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__State__CountryId__2B0A656D" Association="Self.FK__State__CountryId__2B0A656D">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employee__StateI__3B40CD36" Association="Self.FK__Employee__StateI__3B40CD36">
+      <End Role="State" EntitySet="States" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <EntitySet Name="Emp_Project_Mapping" EntityType="AttendanceManagementdbModel.Emp_Project_Mapping" />
+    <EntitySet Name="EmpAttendences" EntityType="AttendanceManagementdbModel.EmpAttendence" />
+    <EntitySet Name="Project_Master" EntityType="AttendanceManagementdbModel.Project_Master" />
+    <AssociationSet Name="FK__Emp_Proje__Emplo__5070F446" Association="AttendanceManagementdbModel.FK__Emp_Proje__Emplo__5070F446">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Emp_Project_Mapping" EntitySet="Emp_Project_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Emp_Proje__Proje__5165187F" Association="AttendanceManagementdbModel.FK__Emp_Proje__Proje__5165187F">
+      <End Role="Project_Master" EntitySet="Project_Master" />
+      <End Role="Emp_Project_Mapping" EntitySet="Emp_Project_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmpAttend__Emplo__5441852A" Association="AttendanceManagementdbModel.FK__EmpAttend__Emplo__5441852A">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmpAttendence" EntitySet="EmpAttendences" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmpAttend__Proje__5535A963" Association="AttendanceManagementdbModel.FK__EmpAttend__Proje__5535A963">
+      <End Role="Project_Master" EntitySet="Project_Master" />
+      <End Role="EmpAttendence" EntitySet="EmpAttendences" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Emp_Project_Mapping">
+    <Key>
+      <PropertyRef Name="Mapping_Id" />
+    </Key>
+    <Property Name="Mapping_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Employee_Id" Type="Int32" />
+    <Property Name="Project_Id" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="AttendanceManagementdbModel.FK__Emp_Proje__Emplo__5070F446" FromRole="Emp_Project_Mapping" ToRole="Employee" />
+    <NavigationProperty Name="Project_Master" Relationship="AttendanceManagementdbModel.FK__Emp_Proje__Proje__5165187F" FromRole="Emp_Project_Mapping" ToRole="Project_Master" />
+  </EntityType>
+  <EntityType Name="EmpAttendence">
+    <Key>
+      <PropertyRef Name="Attendence_Id" />
+    </Key>
+    <Property Name="Attendence_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Employee_Id" Type="Int32" />
+    <Property Name="Project_Id" Type="Int32" />
+    <Property Name="InTime" Type="Time" Precision="7" />
+    <Property Name="OutTime" Type="Time" Precision="7" />
+    <Property Name="latitude" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="longitude" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Duration" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="AttendanceManagementdbModel.FK__EmpAttend__Emplo__5441852A" FromRole="EmpAttendence" ToRole="Employee" />
+    <NavigationProperty Name="Project_Master" Relationship="AttendanceManagementdbModel.FK__EmpAttend__Proje__5535A963" FromRole="EmpAttendence" ToRole="Project_Master" />
+  </EntityType>
+  <EntityType Name="Project_Master">
+    <Key>
+      <PropertyRef Name="Project_Id" />
+    </Key>
+    <Property Name="Project_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Discription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Emp_Project_Mapping" Relationship="AttendanceManagementdbModel.FK__Emp_Proje__Proje__5165187F" FromRole="Project_Master" ToRole="Emp_Project_Mapping" />
+    <NavigationProperty Name="EmpAttendences" Relationship="AttendanceManagementdbModel.FK__EmpAttend__Proje__5535A963" FromRole="Project_Master" ToRole="EmpAttendence" />
+  </EntityType>
+  <Association Name="FK__Emp_Proje__Emplo__5070F446">
+    <End Type="AttendanceManagementdbModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="AttendanceManagementdbModel.Emp_Project_Mapping" Role="Emp_Project_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="Emp_Project_Mapping">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Emp_Proje__Proje__5165187F">
+    <End Type="AttendanceManagementdbModel.Project_Master" Role="Project_Master" Multiplicity="0..1" />
+    <End Type="AttendanceManagementdbModel.Emp_Project_Mapping" Role="Emp_Project_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project_Master">
+        <PropertyRef Name="Project_Id" />
+      </Principal>
+      <Dependent Role="Emp_Project_Mapping">
+        <PropertyRef Name="Project_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmpAttend__Emplo__5441852A">
+    <End Type="AttendanceManagementdbModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="AttendanceManagementdbModel.EmpAttendence" Role="EmpAttendence" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Employee_Id" />
+      </Principal>
+      <Dependent Role="EmpAttendence">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmpAttend__Proje__5535A963">
+    <End Type="AttendanceManagementdbModel.Project_Master" Role="Project_Master" Multiplicity="0..1" />
+    <End Type="AttendanceManagementdbModel.EmpAttendence" Role="EmpAttendence" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project_Master">
+        <PropertyRef Name="Project_Id" />
+      </Principal>
+      <Dependent Role="EmpAttendence">
+        <PropertyRef Name="Project_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    body {
+        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
+    }
+
+            
+</style>
+
+<div class="jumbotron" style="background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%); ">
+    <h1>Betaedge Innovations Pvt. Ltd</h1>
+    <p class="lead">This application is easy to use, the user has access to all data that is related to employee information. You can view the details and add some new information like new project , employee etc.</p>
+    @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Manage Users</h2>
+        <p>
+            This is a login page allows user <br />
+            to gain access to an application by<br />
+            entering their usernameand password
+        </p>
+        @*<p><a class="btn btn-default"  onclick=" document.location = 'Login'">Login User</a></p>*@
+        <p>
+            @*<a class="btn btn-default" @if (Session["FirstName"] != null)
+            {
+                @Html.ActionLink("Login User", "")  
+            }
+            else
+            {
+                @Html.ActionLink("Login User", "Login")  
+            }
+              </a>*@
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Manage New Users</h2>
+        <p>
+            This is a  users registration Page <br />
+            normally provide some sort of credentials<br />
+            (such as a username or e-mail address, and a <br /> password)
+            to the system in order to prove their identity
+        </p>
+        @*<p><a class="btn btn-default"  @if (Session["FirstName"] != null)
+                    {
+                        @Html.ActionLink("Manage New User", "CreateAttendance")
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Manage New User", "")
+                    }
+              </a></p>*@
+    </div>
+    <div class="col-md-4">      
+        <h2>Manage New Project </h2>
+        <p>This is a ProjectBinding to employee.<br />There is a admin provide a project to employee </p>
+        @*<p><a class="btn btn-default" @if (Session["FirstName"] != null) 
+
+        { @Html.ActionLink("Manage Project", "ProjectEmployeeBinding")  } 
+
+        else
+
+        {
+            @Html.ActionLink("Manage Project", "")  
+        }
+              </a>
+        </p>*@
+    </div>
+</div>

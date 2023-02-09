@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AttendanceManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="States" Relationship="Self.FK__State__CountryId__49C3F6B7" FromRole="Country" ToRole="State" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Country" FromRole="Country" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Emp_Project_Mapping">
+    <Key>
+      <PropertyRef Name="Emp_Project_Mapping_Id" />
+    </Key>
+    <Property Name="Emp_Project_Mapping_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Project_Id" Type="Int32" />
+    <Property Name="Employee_Id" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Emp_Project_Mapping_Employee" FromRole="Emp_Project_Mapping" ToRole="Employee" />
+    <NavigationProperty Name="Project_Master" Relationship="Self.FK_Emp_Project_Mapping_Project_Master" FromRole="Emp_Project_Mapping" ToRole="Project_Master" />
+  </EntityType>
+  <EntityType Name="EmpAtendance">
+    <Key>
+      <PropertyRef Name="EmpAtendenceId" />
+    </Key>
+    <Property Name="EmpAtendenceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="Intime" Type="Time" Precision="7" />
+    <Property Name="OutTime" Type="Time" Precision="7" />
+    <Property Name="latitude" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="longitude" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Duration" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_EmpAtendance_Employee" FromRole="EmpAtendance" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateofBirth" Type="DateTime" Precision="0" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Contact_No" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="AlternateContact_No" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Emp_Joining_Date" Type="DateTime" Precision="0" />
+    <Property Name="Marital_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="Is_admin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_Employee_Country" FromRole="Employee" ToRole="Country" />
+    <NavigationProperty Name="Emp_Project_Mapping" Relationship="Self.FK_Emp_Project_Mapping_Employee" FromRole="Employee" ToRole="Emp_Project_Mapping" />
+    <NavigationProperty Name="EmpAtendances" Relationship="Self.FK_EmpAtendance_Employee" FromRole="Employee" ToRole="EmpAtendance" />
+    <NavigationProperty Name="State" Relationship="Self.FK_Employee_State" FromRole="Employee" ToRole="State" />
+  </EntityType>
+  <EntityType Name="Project_Master">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectCode" Type="Int32" />
+    <NavigationProperty Name="Emp_Project_Mapping" Relationship="Self.FK_Emp_Project_Mapping_Project_Master" FromRole="Project_Master" ToRole="Emp_Project_Mapping" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__State__CountryId__49C3F6B7" FromRole="State" ToRole="Country" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_State" FromRole="State" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__State__CountryId__49C3F6B7">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="State" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emp_Project_Mapping_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Emp_Project_Mapping" Type="Self.Emp_Project_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Emp_Project_Mapping">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emp_Project_Mapping_Project_Master">
+    <End Role="Project_Master" Type="Self.Project_Master" Multiplicity="0..1" />
+    <End Role="Emp_Project_Mapping" Type="Self.Emp_Project_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project_Master">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="Emp_Project_Mapping">
+        <PropertyRef Name="Project_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpAtendance_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="EmpAtendance" Type="Self.EmpAtendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmpAtendance">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_State">
+    <End Role="State" Type="Self.State" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AttendanceManagementEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Emp_Project_Mapping" EntityType="Self.Emp_Project_Mapping" />
+    <EntitySet Name="EmpAtendances" EntityType="Self.EmpAtendance" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Project_Master" EntityType="Self.Project_Master" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__State__CountryId__49C3F6B7" Association="Self.FK__State__CountryId__49C3F6B7">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Country" Association="Self.FK_Employee_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Project_Mapping_Employee" Association="Self.FK_Emp_Project_Mapping_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Emp_Project_Mapping" EntitySet="Emp_Project_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Project_Mapping_Project_Master" Association="Self.FK_Emp_Project_Mapping_Project_Master">
+      <End Role="Project_Master" EntitySet="Project_Master" />
+      <End Role="Emp_Project_Mapping" EntitySet="Emp_Project_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpAtendance_Employee" Association="Self.FK_EmpAtendance_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmpAtendance" EntitySet="EmpAtendances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_State" Association="Self.FK_Employee_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(AttendanceManagementModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(AttendanceManagementModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

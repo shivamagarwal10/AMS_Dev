@@ -1,0 +1,211 @@
+﻿@model EmployeeAttendenceMangement.Models.EmployeeAttandenceModel
+
+<style>
+    body {
+        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
+    }
+</style>
+
+<style>
+
+    .form-horizontal {
+        overflow: hidden;
+    }
+
+    h3 {
+        padding: 10px;
+    }
+
+    .control-label:after {
+        content: " *";
+        font-weight: bold;
+        color: red;
+    }
+</style>
+
+<h3>Employee Attendance</h3>
+
+@using (Html.BeginForm("CreateAttandence", "EmployeeAttendance", FormMethod.Post))
+{
+    <hr />
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "ModelOnly", new { @class = "text-danger" })
+        <div class="form-group">
+
+            @Html.Label("Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+
+                @Html.TextBox("EmployeeId", Session["EmployeeId"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:250px", Id = "EmpIdHide" })
+                @Html.TextBox("EmployeeId", Session["FirstName"].ToString() + " " + Session["LastName"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "pId", required = "required", @readonly = "readonly" })
+
+
+
+            </div>
+            @*@Html.Label("Project Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+
+                    @Html.DropDownList("projectId", ViewBag.Emp_Project_Mapping as SelectList, "--Select Project--", htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "Empid" })
+
+                    @Html.ValidationMessageFor(model => model.projectId, "", new { @class = "text-danger" })
+                </div>*@
+        </div>
+
+        <div class="form-group">
+            @Html.Label("InTime", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Intime, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "TxtIntime" } })
+                @Html.ValidationMessageFor(model => model.Intime, "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.OutTime, new { htmlAttributes = new { @class = "form-control", Id = "TxtOuttime", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Latitude", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+
+                @Html.EditorFor(model => model.latitude, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "GetLatitudee", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.latitude, "", new { @class = "text-danger" })
+                <p id="demo"></p>
+            </div>
+            @Html.Label("Longitude", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.longitude, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "GetLongitudee", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.longitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            </div>
+            @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @Value = @DateTime.Now.ToShortDateString(), style = "width:260px", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-10">
+                <input type="submit" value="save" class="btn btn-success" />
+                <p id="demo"></p>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    window.onload = getLocation();
+    
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        }
+        else { x.innerHTML = "Geolocation is not supported by this browser."; }
+    }
+    function showPosition(position) {
+
+        var z = position.coords.latitude;
+        var X1 = position.coords.longitude;
+
+        $("#GetLatitudee").val(z);
+        $("#GetLongitudee").val(X1);
+
+    }
+    function showError(error) {
+        if (error.code == 1) {
+            x.innerHTML = "User denied the request for Geolocation."
+        }
+        else if (err.code == 2) {
+            x.innerHTML = "Location information is unavailable."
+        }
+        else if (err.code == 3) {
+            x.innerHTML = "The request to get user location timed out."
+        }
+        else {
+            x.innerHTML = "An unknown error occurred."
+        }
+    }
+</script>
+
+@*<script>
+    var x = document.getElementById("GetLatitude");
+    var y = document.getElementById("GetLongitude");
+    $(document).ready(function () {
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
+        else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    });
+    function showPosition(position) {
+        var z = position.coords.latitude;
+        var X1 = position.coords.longitude;
+
+        $("#GetLatitudee").val(z);
+        $("#GetLongitudee").val(X1);
+    }
+</script>*@
+<script language="javascript">
+
+    $('#TxtOuttime').change(function () {
+        debugger;
+        var start = $("#TxtIntime").val();
+        var end = $("#TxtOuttime").val();
+        start = start.split(":");
+        end = end.split(":");
+        var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+        var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+        var diff = endDate.getTime() - startDate.getTime();
+        var hours = Math.floor(diff / 1000 / 60 / 60);
+        diff -= hours * 1000 * 60 * 60;
+        var minutes = Math.floor(diff / 1000 / 60);
+
+        var final = (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
+
+        $("#Duration").val(final);
+    });
+    $('#EmpIdHide').hide();
+</script>
+<script>
+    $('#TxtOuttime').change(function () {
+        debugger;
+        $("#TxtOuttime").next('.validation').hide();
+        if ($("#TxtIntime").val() >= $("#TxtOuttime").val()) {
+            $("#TxtOuttime").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Out time Should be greater than in time  </div>");
+            document.getElementById("TxtOuttime").value = "";
+            document.getElementById("Duration").value = "";
+        }
+        else {
+            $("#TxtOuttime").next('.validation').hide();
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#TxtIntime").change(function () {
+            debugger;
+
+            if ($("#TxtIntime").val() != null) {
+                $('#TxtOuttime').removeAttr("readonly")
+            }
+            else {
+                $('#TxtOuttime').attr('readonly', true);
+            }
+        });
+    });
+</script>

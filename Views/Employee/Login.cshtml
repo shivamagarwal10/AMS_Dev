@@ -1,0 +1,63 @@
+﻿@model EmployeeAttendenceMangement.Models.EmployeeCreateModel
+@{
+    ViewBag.Title = "Login";
+}
+<style>
+    h3 {
+        padding: 10px;
+    }
+
+    Errormsg {
+        color: #b8b894;
+    }
+</style>
+
+<style>
+    body
+    {
+        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
+       
+    }
+</style>
+<h3>Log in</h3>
+
+<hr />
+@using (Html.BeginForm("Login", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class=" col-md-10">
+                @Html.Editor("EmailId", new { htmlAttributes = new { @class = "form-control", Id = "txtEmaild", Required = "Required" , placeholder = "       --Enter Your EmailId--" } })
+                @Html.ValidationMessage("Email", new { @class = "text-danger" })
+
+                <span style="color:red">@TempData["msg1"]</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", Required = "Required", placeholder = "       --Enter Your Password--" } })
+                @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+
+                <span style="color:red">@TempData["msg2"]</span>
+            </div>
+        </div>
+
+
+         <div class="form-group">
+            <div class="col-md-offset-2  col-md-2">
+                <input type="submit" value="Login" class="btn btn-success" />
+            </div>
+            <div class="col-md-1 col-md-2" style="background-color:white">
+                @Html.ActionLink("Forgot Password?", "ForgetPassword" )
+            </div>
+        </div>
+    </div>
+}
+
+

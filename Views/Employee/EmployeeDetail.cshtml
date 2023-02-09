@@ -1,0 +1,309 @@
+﻿
+@model PagedList.IPagedList<EmployeeAttendenceMangement.Models.EmployeeCreateModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "AttendanceDetail";
+}
+<style>
+    body {
+        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: "Open Sans", sans-serif;
+        color: #333333;
+    }
+
+    .box-form {
+        margin: 0 auto;
+        width: 80%;
+        background: #FFFFFF;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex: 1 1 100%;
+        align-items: stretch;
+        justify-content: space-between;
+        box-shadow: 0 0 20px 6px #090b6f85;
+    }
+
+
+
+
+        .box-form div {
+            height: auto;
+        }
+
+        .box-form .left {
+            color: #FFFFFF;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-image: url("https://i.pinimg.com/736x/5d/73/ea/5d73eaabb25e3805de1f8cdea7df4a42--tumblr-backgrounds-iphone-phone-wallpapers-iphone-wallaper-tumblr.jpg");
+            overflow: hidden;
+        }
+
+            .box-form .left .overlay {
+                padding: 30px;
+                width: 100%;
+                height: 100%;
+                background: #5961f9ad;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+
+                .box-form .left .overlay h1 {
+                    font-size: 10vmax;
+                    line-height: 1;
+                    font-weight: 900;
+                    margin-top: 40px;
+                    margin-bottom: 20px;
+                }
+
+                .box-form .left .overlay span p {
+                    margin-top: 30px;
+                    font-weight: 900;
+                }
+
+                .box-form .left .overlay span a {
+                    background: #3b5998;
+                    color: #FFFFFF;
+                    margin-top: 10px;
+                    padding: 14px 50px;
+                    border-radius: 100px;
+                    display: inline-block;
+                    box-shadow: 0 3px 6px 1px #042d4657;
+                }
+
+                    .box-form .left .overlay span a:last-child {
+                        background: #1dcaff;
+                        margin-left: 30px;
+                    }
+
+        .box-form .right {
+            padding: 40px;
+            overflow: hidden;
+        }
+
+
+            .box-form .right h5 {
+                font-size: 6vmax;
+                line-height: 0;
+            }
+
+            .box-form .right p {
+                font-size: 14px;
+                color: #B0B3B9;
+            }
+
+            .box-form .right .inputs {
+                overflow: hidden;
+            }
+
+            .box-form .right input {
+                width: 100%;
+                padding: 10px;
+                margin-top: 25px;
+                font-size: 16px;
+                border: none;
+                outline: none;
+                border-bottom: 2px solid #B0B3B9;
+            }
+
+            .box-form .right .remember-me--forget-password {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .box-form .right .remember-me--forget-password input {
+                    margin: 0;
+                    margin-right: 7px;
+                    width: auto;
+                }
+
+            .box-form .right button {
+                float: right;
+                color: #fff;
+                font-size: 16px;
+                padding: 12px 35px;
+                border-radius: 50px;
+                display: inline-block;
+                border: 0;
+                outline: 0;
+                box-shadow: 0px 4px 20px 0px #49c628a6;
+                background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
+            }
+</style>
+
+<style>
+
+    table, th, td {
+        border: 1px solid blue;
+    }
+
+        table.table {
+            margin-left: Auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+    .cell-breakWord {
+        word-wrap: break-word;
+        padding-left: 1em;
+    }
+
+    th {
+        background-color: #de91ed;
+    }
+
+    tr {
+        background-color: #a779ed;
+    }
+
+    class {
+        border: hidden;
+    }
+</style>
+<h2>Employee Details</h2>
+
+@if (Convert.ToBoolean(Session["Is_admin"]) == true)
+{
+    <p>
+        <button type="submit" class="btn-btn-primary"> @Html.ActionLink("Create  Employee", "Create")</button>
+    </p>
+}
+else
+{
+    <br />
+    <br />
+
+}
+<table class="table">
+    <tr>
+        <th width="70px">
+            Name
+        </th>
+
+        <th width="70px">
+            Gender
+        </th>
+        <th width="70px">
+            Date Of Birth
+        </th>
+        <th>
+            Joining Date
+        </th>
+        <th>
+            City Name
+        </th>
+        <th width="70px">
+            Country Name
+        </th>
+        <th>
+            State Name
+        </th>
+
+        <th width="70px">
+            PinCode
+        </th>
+        <th width="70px">
+            Address
+        </th>
+        <th>
+            Contact
+            Number
+        </th>
+        <th>
+            Alternate Contact Number
+        </th>
+        <th>
+            Marital status
+        </th>
+        <th>
+            Email
+        </th>
+
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="cell-breakWord" width="100px">
+                @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+
+            </td>
+            @*<td>
+                  @Html.DisplayFor(modelItem => item.LastName)
+                </td>*@
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.DateofBirth)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.Emp_Joining_Date)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.CountryName)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.StateName)
+            </td>
+
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.PinCode)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.Contact_No)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.AlternateContact_No)
+            </td>
+
+
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.Marital_status)
+            </td>
+            <td class="cell-breakWord">
+                @Html.DisplayFor(modelItem => item.EmailId)
+            </td>
+
+
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", new { EmployeeId = item.EmployeeId })
+                @*@Html.ActionLink("Delete", "Delete", new { EmployeeId = item.EmployeeId})*@
+
+            </td>
+
+        </tr>
+
+    }
+
+</table>
+
+
+@using (Html.BeginForm("EmployeeDetail", "Employee", FormMethod.Get, new { id = "form1" }))
+
+{
+    <div id='Paging' style="text-align: center">
+
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("EmployeeDetail", new { page, pageSize = ViewBag.psize }))
+    </div>
+
+}

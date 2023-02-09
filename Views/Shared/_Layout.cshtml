@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Attendance Management System.</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/bootstrap-dtpicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <style>
+        hmtl {
+            height: 100%;
+        }
+
+        body {
+            background: #bfdbfa;
+            position: relative;
+            margin: 0px;
+            min-height: 100px;
+            padding-bottom: 6.74rem;
+            box-sizing: inherit
+        }
+
+        h5 {
+            color: white;
+            margin-top: 18px;
+        }
+
+        p {
+            padding-top: 10px;
+        }
+      
+        footer {
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            text-align: center;
+            background-color: #ccd8ff;
+            height: 50px;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 0;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Attendance Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li style= "color: white; margin-top: 18px; " class="glyphicon glyphicon-home"> </li>
+                    <li> @Html.ActionLink("Home", "Index", "Home")</li>
+
+                    
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                    @if (Session["FirstName"] != null)
+                    {
+                        <li>@Html.ActionLink("Employee Detail", "EmployeeDetail", "Employee")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Employee Detail", "Index", "Home")</li>
+                    }
+                    @if (Convert.ToBoolean(Session["Is_admin"]) == true)
+                    {
+                        <li>@Html.ActionLink("Project", "ProjectDetail", "ProjectMaster")</li>
+                    }
+                    else
+                    {
+
+                    }
+                    @if (Convert.ToBoolean(Session["Is_admin"]) == true)
+                    {
+                        <li>@Html.ActionLink("Project Mapping", "Project_EmployeeMapping", "EmployeeProjectMapping")</li>
+                    }
+                    else
+                    {
+
+
+                    }
+                    @if (Session["FirstName"] != null)
+                    {
+                        <li>@Html.ActionLink("Attendance Detail", "EmployeeAttandenceDetail", "EmployeeAttendance")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Attendance Detail", "Index", "Home")</li>
+
+                    }
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    @if (Session["EmployeeId"] != null)
+                    {
+                        <li class="btn-btn-primary"><h5> @Session["FirstName"]</h5></li>
+                        <li>@Html.ActionLink("LogOut", "LogOut", "Employee")</li>
+                    }
+                    else
+                    {
+                        <li><span style= "color: white; margin-top: 18px; "  class="glyphicon glyphicon-user"></span></li>
+                        <li>  @Html.ActionLink("Login", "Login", "Employee")</li>
+                        }
+                        @*@Html.ActionLink("Log in", "Login")</li>*@
+                    </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+
+        <footer>
+
+            <p>Copyright &copy; | info@betaedge.in </p>
+
+
+        </footer>
+
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Scripts/bootstrap-dtpicker.min.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+        
+</body>
+</html>

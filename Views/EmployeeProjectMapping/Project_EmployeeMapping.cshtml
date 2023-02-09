@@ -1,0 +1,78 @@
+﻿@model EmployeeAttendenceMangement.Models.EmployeeProjectMapping
+
+
+
+
+<h3>Project Employee Mapping </h3>
+<style>
+      body {
+        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
+    }
+    .form-horizontal {
+        overflow: hidden;
+    }
+</style>
+@using (Html.BeginForm("Project_EmployeeMapping", "EmployeeProjectMapping", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "ModelOnly", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.HiddenFor(model => model.Emp_Project_Mapping_Id)
+        @Html.Label("ProjectName", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+
+            @Html.DropDownList("Project_Id", new SelectList(ViewBag.ProjectLists, "Project_Id", "ProjectName"), "---Select Project Name---", htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "Pid", required = "required" })
+
+            @Html.ValidationMessageFor(model => model.Project_Id, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+        <div class="form-group">
+            @Html.Label("Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+
+                @Html.DropDownListFor(model => model.Employee_Id, new SelectList(""), " ---Select Employee Name ---", htmlAttributes: new { @class = "form-control", @style = "width:250px", Id = "EmpId", required = "required" })
+
+
+                @*@Html.DropDownListFor(model => model.Employee_Id, new SelectList(ViewBag.CountryList1, "StateId", "StateName"), "---Select State Name ---", htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "St", required = "required" })*@
+
+
+                @Html.ValidationMessageFor(model => model.Employee_Id, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#Pid").change(function () {
+            var id = $(this).val();
+            debugger;
+            $("#EmpId").empty();
+            $.get("/EmployeeProjectMapping/GetEmployeeName", { ProjectCode: $("#Pid").val() }, function (data) {
+                debugger;
+                var v = "<option>---Select---</option>";
+                $.each(data, function (i, v1) {
+                    v += "<option value=" + v1.Value + ">" + v1.Text + "</option>";
+
+
+                });
+                $("#EmpId").html(v);
+            })
+        });
+
+    });
+</script>

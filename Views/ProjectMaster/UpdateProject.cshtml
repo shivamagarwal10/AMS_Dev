@@ -1,0 +1,73 @@
+﻿@model EmployeeAttendenceMangement.Models.ProjectMasterModel
+
+@{
+    ViewBag.Title = "UpdateProject";
+}
+
+
+<style>
+    .form-horizontal {
+        overflow: hidden;
+    }
+
+    h3 {
+        padding: 10px;
+    }
+</style>
+
+@using (Html.BeginForm("UpdateProject", "ProjectMaster", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h3> Project</h3>
+    <hr />
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.HiddenFor(model => model.ProjectId)
+            @Html.Label("Project Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "      --Enter Your Project Name --" } })
+                @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", onkeyup = "textAreaAdjust(this)", required = "required", placeholder = "      --Description About Project --" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Project Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectCode, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "      -- Enter Your  Project Code --" } })
+                @Html.ValidationMessageFor(model => model.ProjectCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3  col-md-10">
+                <input type="submit" value="Update" class="btn btn-success" />
+            </div>
+
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<script type="text/javascript">
+
+
+    function textAreaAdjust(element) {
+        element.style.height = "1px";
+        element.style.height = (25 + element.scrollHeight) + "px";
+    }
+
+</script>
