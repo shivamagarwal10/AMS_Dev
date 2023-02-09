@@ -32,6 +32,7 @@ namespace EmployeeAttendenceMangement.Controllers
         public ActionResult GetDate( int EmployeeId)
         {
             return View();
+
         }
         public ActionResult CreateAttandence()
         {
