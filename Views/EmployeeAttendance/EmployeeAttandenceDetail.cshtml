@@ -40,12 +40,11 @@
 
 
 
-@if (Convert.ToInt32(Session["IsAttenadance"]) == 0 & Convert.ToDateTime(Session["Date"]) != @DateTime.Today.Date)
+@if ( Convert.ToDateTime(Session["Date"])!= @DateTime.Today.Date)
 {
     <p>
         <button type="submit" class="btn-btn-primary">@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
     </p>
-
 }
 else
 {
@@ -91,7 +90,7 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
-         
+
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>

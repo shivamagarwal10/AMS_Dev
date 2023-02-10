@@ -75,8 +75,8 @@ D:\GitHub\AMS_Dev\bin\System.Web.WebPages.Deployment.xml
 D:\GitHub\AMS_Dev\bin\System.Web.WebPages.Razor.xml
 D:\GitHub\AMS_Dev\bin\Newtonsoft.Json.xml
 D:\GitHub\AMS_Dev\bin\Antlr3.Runtime.pdb
-D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.AssemblyReference.cache
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.CoreCompileInputs.cache
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.CopyComplete
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.dll
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.pdb
+D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.AssemblyReference.cache

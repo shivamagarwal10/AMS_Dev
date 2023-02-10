@@ -233,14 +233,14 @@
             @Html.Label("Contact No", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
 
-                @Html.EditorFor(model => model.Contact_No, new { htmlAttributes = new { @class = "form-control", required = "", Id = "ContactTxt", placeholder = "      --Enter Your Contact No--", onkeypress = "return isNumberKey(event)" } })
+                @Html.EditorFor(model => model.Contact_No, new { htmlAttributes = new { @class = "form-control", required = "", Id = "ContactTxt", maxlength = "10", placeholder = "      --Enter Your Contact No--", onkeypress = "return isNumberKey(event)" } })
                 <div id="divMessage1" style="color:red; font-weight:bold;"></div>
                 @Html.ValidationMessageFor(model => model.Contact_No, "", new { style = "color:red " })
 
             </div>
             @Html.Label("Alternate Contact No", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
+                @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", required = "required", maxlength = "10", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
                 @Html.ValidationMessageFor(model => model.AlternateContact_No, "", new { style = "color:red " })
 
             </div>
@@ -279,7 +279,7 @@
             </div>
             @Html.Label("PinCode", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.EditorFor(model => model.PinCode, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your PinCode--", onkeypress = "return isNumberKey(event)" } })
+                @Html.EditorFor(model => model.PinCode, new { htmlAttributes = new { @class = "form-control", required = "required", maxlength = "6", placeholder = "     --Enter Your PinCode--", onkeypress = "return isNumberKey(event)" } })
                 @TempData["msgpincode"]
                 @Html.ValidationMessageFor(model => model.PinCode, "", new { style = "color:red " })
             </div>
@@ -345,8 +345,8 @@
 
     $(function () {
 
-        $("#onEmailCheck").change(function () {
-        
+        $("#onEmailCheck").blur(function () {
+            debugger;
             var email = $("#onEmailCheck").val();
 
             $.ajax
@@ -370,10 +370,6 @@
 <script type="text/javascript">
     $(function () {
 
-        
-
-
-
         $('#DateofBirth').change(function () {
             $("#DateofBirth").next('.validation').hide();
             var age = CalculateAge();
@@ -386,7 +382,6 @@
             }
         });
 
-
     });
 
 
@@ -395,7 +390,7 @@
         $("#Emp_Joining_Date").next('.validation').hide();
         var age = CalculateAge1();
         if (age < 18) {
-            $("#Emp_Joining_Date").after("<div class='validation' style='color:red;margin-bottom: 20px;'>you are not eligible for Registration</div>");
+            $("#Emp_Joining_Date").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Joining date must be greater than 18year to  Date of Birth</div>");
             document.getElementById("Emp_Joining_Date").value = "";
         }
         else {
@@ -474,7 +469,8 @@
             var paswd = /^[a-zA-Z0-9!#$%^&*]{6,16}$/;
             if (paswd.test(email) ) {
                 $("#msgPassword").html("password contain between 5 to 10 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
-                return false;
+                $("#txtPassword").val("");
+                document.getElementById("txtPassword").value = "";
             }
             else
             {

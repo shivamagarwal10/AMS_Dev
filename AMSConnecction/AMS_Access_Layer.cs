@@ -23,7 +23,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             catch (Exception er)
             {
 
-            }
+            } 
         }
 
         public List<EmployeeCreateModel> GetEmployee(bool is_admin, int EmployeeId)
@@ -34,7 +34,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             string str = "";
             if (is_admin == true)
             {
-                str = " em.is_admin  in(1,0) ";
+                str = " em.is_admin  in(1,0) and em.Status in(1) ";
             }
             else
             {
@@ -139,7 +139,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         {   
             connection();
             DataTable dt = new DataTable();
-
             SqlDataAdapter adp = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand("Select EmailId from Employee  where   EmailId = @emailId ", con);
             cmd.Parameters.AddWithValue("@emailId", emailId);
@@ -160,9 +159,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         public bool AddEmployee(EmployeeCreateModel obj)
         {
             connection();
-
-
-
             var query = "Insert into Employee (FirstName,City,Address," +
                 "Marital_status,Emp_Joining_Date,CountryId,StateId,AlternateContact_No," +
                 "LastName,PinCode,DateofBirth,Gender," +
@@ -253,9 +249,34 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             }
             return res;
         }
+
+        public int DeleteData(String EmployeeId)
+        {
+            connection();
+            int result;
+            try
+            {
+
+                SqlCommand com = new SqlCommand("Update Employee set Status =" + 0 + "  where  EmployeeId =@EmployeeId", con);
+
+                com.Parameters.AddWithValue("@EmployeeId", EmployeeId);
+
+
+                con.Open();
+                result = com.ExecuteNonQuery();
+                return result;
+            }
+            catch (Exception er)
+            {
+                return result = 0;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         public bool UpdateEmployee(EmployeeCreateModel obj)
         {
-
             connection();
 
             SqlCommand com = new SqlCommand("Update Employee set FirstName=@FirstName,City = @City" +
@@ -295,8 +316,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             {
                 return false;
             }
-
-
         }
 
 
@@ -325,7 +344,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                     obj1.FirstName = dt.Rows[0]["FirstName"].ToString();
                     obj1.LastName = dt.Rows[0]["LastName"].ToString();
 
-
                     obj1.Is_admin = Convert.ToBoolean(dt.Rows[0]["Is_admin"]);
                     
                     obj1.EmployeeId = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
@@ -333,7 +351,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
                     return true;
                 }
-
 
                 else
                 {

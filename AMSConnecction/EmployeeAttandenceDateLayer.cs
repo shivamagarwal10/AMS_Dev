@@ -50,7 +50,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 EmpAttandenceList.Add(
                     new EmployeeAttandenceModel
                     {
-
                         FirstName = Convert.ToString(dr["FirstName"]),
                         EmpAtendenceId = Convert.ToInt32(dr["EmpAtendenceId"]),
                         Intime = TimeSpan.Parse(dr["Intime"].ToString()),
@@ -62,7 +61,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
                         Date = Convert.ToDateTime(dr["Date"]),
                         EmployeeId = Convert.ToInt32(dr["EmployeeId"]),
-
                     }
                     );
             }
@@ -74,7 +72,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             connection();
 
             List<EmployeeAttandenceModel> EmpAttandenceList = new List<EmployeeAttandenceModel>();
-
 
             var query = " select ea.EmpAtendenceId,ea.EmployeeId, c.FirstName,ea.Duration,ea.Date,ea.Intime,ea.OutTime,ea.latitude,ea.longitude From EmpAtendance as ea INNER JOIN Employee as c  on ea.EmployeeId =c.EmployeeId   ORDER BY EmpAtendenceId DESC ";
 
@@ -158,7 +155,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             com.Parameters.AddWithValue("@EmpAtendenceId", obj.EmpAtendenceId);
             com.Parameters.AddWithValue("@EmployeeId", obj.EmployeeId);
-
             com.Parameters.AddWithValue("@Intime", obj.Intime);
             com.Parameters.AddWithValue("@OutTime", obj.OutTime);
             com.Parameters.AddWithValue("@latitude", obj.latitude);
@@ -171,7 +167,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             con.Close();
             if (i >= 1)
             {
-
                 return true;
             }
             else

@@ -87,7 +87,6 @@ namespace EmployeeAttendenceMangement.Controllers
 
         public ActionResult EmpAttendanceDelete(String EmpAtendenceId)
         {
-
             try
             {
                 EmployeeAttandenceDateLayer EmpAttandence_layer = new EmployeeAttandenceDateLayer();

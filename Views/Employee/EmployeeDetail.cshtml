@@ -182,45 +182,26 @@ else
 }
 <table class="table">
     <tr>
-        <th width="70px">
+        <th>
+            Employee ID
+        </th>
+        <th >
             Name
         </th>
-
-        <th width="70px">
-            Gender
-        </th>
-        <th width="70px">
-            Date Of Birth
+        <th >
+            Birth date
         </th>
         <th>
             Joining Date
         </th>
+     
         <th>
-            City Name
-        </th>
-        <th width="70px">
-            Country Name
-        </th>
-        <th>
-            State Name
-        </th>
-
-        <th width="70px">
-            PinCode
-        </th>
-        <th width="70px">
-            Address
-        </th>
-        <th>
-            Contact
-            Number
+            Contact Number
         </th>
         <th>
             Alternate Contact Number
         </th>
-        <th>
-            Marital status
-        </th>
+    
         <th>
             Email
         </th>
@@ -232,63 +213,56 @@ else
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td class="cell-breakWord" width="100px">
-                @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmployeeId)
+    </td>
 
-            </td>
-            @*<td>
-                  @Html.DisplayFor(modelItem => item.LastName)
-                </td>*@
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.DateofBirth)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.Emp_Joining_Date)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.CountryName)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.StateName)
-            </td>
+    <td class="cell-breakWord">
+        @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.LastName)
 
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.PinCode)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.Contact_No)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.AlternateContact_No)
-            </td>
+    </td>
 
+    <td class="cell-breakWord">
+        @Html.DisplayFor(modelItem => item.DateofBirth)
+    </td>
+    <td class="cell-breakWord">
+        @Html.DisplayFor(modelItem => item.Emp_Joining_Date)
+    </td>
 
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.Marital_status)
-            </td>
-            <td class="cell-breakWord">
-                @Html.DisplayFor(modelItem => item.EmailId)
-            </td>
+    <td class="cell-breakWord">
+        @Html.DisplayFor(modelItem => item.Contact_No)
+    </td>
+    <td class="cell-breakWord">
+        @Html.DisplayFor(modelItem => item.AlternateContact_No)
+    </td>
+    <td class="cell-breakWord">
+        @Html.DisplayFor(modelItem => item.EmailId)
+    </td>
 
+    <td>
+        @if (Convert.ToBoolean(Session["Is_admin"]) == false)
+        {
+            @Html.ActionLink("Edit", "Edit", new { EmployeeId = item.EmployeeId })
+        }
+        else
+        {
+            if (Convert.ToBoolean(Session["Is_admin"]) == true)
+            {
+                @Html.ActionLink("Edit  ||  ", "Edit", new { EmployeeId = item.EmployeeId })
 
-            <td>
+               
+                @Html.ActionLink("Delete", "Delete", new { EmployeeId = item.EmployeeId }, new { onclick = "return confirm ('Are sure wants to delete?');" })
+            }
+            else
+            {
 
-                @Html.ActionLink("Edit", "Edit", new { EmployeeId = item.EmployeeId })
-                @*@Html.ActionLink("Delete", "Delete", new { EmployeeId = item.EmployeeId})*@
+            }
+        }
 
-            </td>
+    </td>
 
-        </tr>
+</tr>
 
     }
 

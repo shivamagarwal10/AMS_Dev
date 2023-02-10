@@ -68,11 +68,7 @@
                 <ul class="nav navbar-nav">
                     <li style= "color: white; margin-top: 18px; " class="glyphicon glyphicon-home"> </li>
                     <li> @Html.ActionLink("Home", "Index", "Home")</li>
-
-                    
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
+    
                     @if (Session["FirstName"] != null)
                     {
                         <li>@Html.ActionLink("Employee Detail", "EmployeeDetail", "Employee")</li>

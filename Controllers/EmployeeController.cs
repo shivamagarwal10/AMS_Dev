@@ -27,14 +27,7 @@ namespace EmployeeAttendenceMangement.Controllers
 
             return View(access_Layer.GetEmployee(Convert.ToBoolean(Session["Is_admin"]), Convert.ToInt32(Session["EmployeeId"])).ToList().ToPagedList(pageIndex, defaSize));
 
-        }
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-
+        }   
         public ActionResult Create()
         {
             ViewBag.CountryList = CountryList();
@@ -90,7 +83,22 @@ namespace EmployeeAttendenceMangement.Controllers
 
         }
 
+        public ActionResult Delete(String EmployeeId)   
+        {
 
+            try
+            {
+                AMS_Access_Layer access_Layer = new AMS_Access_Layer();
+                int result = access_Layer.DeleteData(EmployeeId);
+                TempData["result3"] = result;
+                ModelState.Clear();
+                return RedirectToAction("EmployeeDetail");
+            }
+            catch (Exception er)
+            {
+                return View();
+            }
+        }
         public string ValidateEmailId(string emailId)
         {
             AMS_Access_Layer access_Layer = new AMS_Access_Layer();
@@ -196,26 +204,6 @@ namespace EmployeeAttendenceMangement.Controllers
             }
         }
 
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-
-                return RedirectToAction("EmployeeDetail");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         public ActionResult Login()
         {

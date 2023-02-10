@@ -33,7 +33,7 @@ namespace EmployeeAttendenceMangement.Models
         public string Gender { get; set; }
         [DataType(DataType.Date)]
       
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd }")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy }")]
         public Nullable<System.DateTime> DateofBirth { get; set; }
         public string City { get; set; }
 
@@ -54,7 +54,7 @@ namespace EmployeeAttendenceMangement.Models
         public string AlternateContact_No { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public Nullable<System.DateTime> Emp_Joining_Date { get; set; }
 
       
