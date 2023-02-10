@@ -25,7 +25,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             } 
         }
-
+        
         public List<EmployeeCreateModel> GetEmployee(bool is_admin, int EmployeeId)
         {
             connection();

@@ -24,7 +24,7 @@ namespace EmployeeAttendenceMangement.Controllers
             int defaSize = (pageSize ?? 10);
             ViewBag.psize = defaSize;
             ModelState.Clear();
-
+            
             return View(access_Layer.GetEmployee(Convert.ToBoolean(Session["Is_admin"]), Convert.ToInt32(Session["EmployeeId"])).ToList().ToPagedList(pageIndex, defaSize));
 
         }   
@@ -208,14 +208,13 @@ namespace EmployeeAttendenceMangement.Controllers
         public ActionResult Login()
         {
             return View();
-
         }
         [HttpPost]
         public ActionResult Login(EmployeeCreateModel model)
         {
             try
             {
-                if (ModelState.IsValid)
+                if(ModelState.IsValid)
                 {
                     AMS_Access_Layer access_Layer = new AMS_Access_Layer();
 

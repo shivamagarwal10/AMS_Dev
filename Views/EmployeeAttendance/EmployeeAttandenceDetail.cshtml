@@ -39,17 +39,11 @@
 <h3>  Employee Attendance Detail </h3>
 
 
+<p>
+    <button type="submit" class="btn-btn-primary" id="btnhide">@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
+    
+</p>
 
-@if ( Convert.ToDateTime(Session["Date"])!= @DateTime.Today.Date)
-{
-    <p>
-        <button type="submit" class="btn-btn-primary">@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
-    </p>
-}
-else
-{
-   
-}
 <table class="table">
     <tr>
 
@@ -161,3 +155,22 @@ else
         @Html.PagedListPager(Model, page => Url.Action("EmployeeAttandenceDetail", new { page, pageSize = ViewBag.psize }))
     </div>
 }
+
+
+<script>
+
+    $(function (){
+        $.ajax
+            ({
+                method: "GET",
+                url: "/EmployeeAttendance/CreateBtnHide/",
+                data: {}
+            })
+            .done(function (msg) {
+                debugger;
+                if (msg == 1) {
+                    $("#btnhide").hide();
+                }
+            });
+    });
+</script>

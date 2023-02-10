@@ -201,6 +201,45 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 con.Close();
             }
         }
-
+        public bool CreateBtnHide(int EmployeeId)
+        {
+            connection();
+            DataTable dt = new DataTable();
+            SqlDataAdapter adp = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("select Date ,EmpAtendenceId,EmployeeId from EmpAtendance Where (EmployeeId = @EmployeeId AND Date = cast(GETDATE() as date)) ", con);
+            cmd.Parameters.AddWithValue("@EmployeeId", EmployeeId);
+            adp.SelectCommand = cmd;
+            adp.Fill(dt);
+            cmd.Dispose();
+            if (dt.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
+        //public int GetAttendanceId(int EmployeeId)
+        //{
+        //    connection();
+        //    DataTable dt = new DataTable();
+        //    SqlDataAdapter adp = new SqlDataAdapter();
+        //    SqlCommand cmd = new SqlCommand("select Date ,EmpAtendenceId,EmployeeId from EmpAtendance Where (EmployeeId = @EmployeeId AND Date = GETDATE())", con);
+        //    cmd.Parameters.AddWithValue("@EmployeeId", EmployeeId);
+        //    adp.SelectCommand = cmd;
+        //    adp.Fill(dt);
+        //    cmd.Dispose();
+        //    if (dt.Rows.Count > 0)
+        //    {
+        //        return 1;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+        //}
+       
+    
 }

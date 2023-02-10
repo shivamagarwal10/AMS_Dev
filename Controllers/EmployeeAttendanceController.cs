@@ -19,7 +19,6 @@ namespace EmployeeAttendenceMangement.Controllers
             int defaSize = (pageSize ?? 10);
             ViewBag.psize = defaSize;
             ModelState.Clear();
-            
             return View(EmpAttandence_layer.GetMarkAttandence(Convert.ToBoolean(Session["Is_admin"]), Convert.ToInt32(Session["EmployeeId"])).ToList().ToPagedList(pageIndex, defaSize));
         }
         
@@ -84,7 +83,20 @@ namespace EmployeeAttendenceMangement.Controllers
                 return View();
             }
         }
+        public string CreateBtnHide()
+        {
+            EmployeeAttandenceDateLayer EmpAttandence_layer = new EmployeeAttandenceDateLayer();
 
+            if (EmpAttandence_layer.CreateBtnHide(Convert.ToInt32(Session["EmployeeId"])))
+            {
+                return "1";
+            }
+            else
+            {
+                return "0";
+            }
+
+        }
         public ActionResult EmpAttendanceDelete(String EmpAtendenceId)
         {
             try
