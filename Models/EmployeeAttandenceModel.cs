@@ -13,6 +13,7 @@ namespace EmployeeAttendenceMangement.Models
         [Required(ErrorMessage = "Time  is required")]
         [DataType(DataType.Time)]
         public Nullable<System.TimeSpan> Intime { get; set; }
+        [Required(ErrorMessage = " This field  is required")]
         [DataType(DataType.Time)]
         public Nullable<System.TimeSpan> OutTime { get; set; }
          public string latitude { get; set; }

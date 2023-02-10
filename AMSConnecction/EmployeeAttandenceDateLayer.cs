@@ -27,13 +27,14 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             List<EmployeeAttandenceModel> EmpAttandenceList = new List<EmployeeAttandenceModel>();
 
             string str = "";
+
             if (is_admin == true)
             {
                 str = " c.is_admin  in(1,0) ";
             }
             else
             {
-                str = " c.is_admin=0 and c.EmployeeId =" + EmployeeId + " ";
+                str = "c.is_admin=0 and c.EmployeeId =" + EmployeeId + " ";
             }
             var query = " select ea.EmpAtendenceId,ea.EmployeeId, c.FirstName,ea.Duration,ea.Date,ea.Intime,ea.OutTime,ea.latitude,ea.longitude From EmpAtendance as ea INNER JOIN Employee as c  on ea.EmployeeId =c.EmployeeId  where " + str + " ORDER BY ea.EmpAtendenceId DESC ";
 
@@ -49,7 +50,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 EmpAttandenceList.Add(
                     new EmployeeAttandenceModel
                     {
-
 
                         FirstName = Convert.ToString(dr["FirstName"]),
                         EmpAtendenceId = Convert.ToInt32(dr["EmpAtendenceId"]),
@@ -109,44 +109,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             return EmpAttandenceList;
         }
-        //public bool GetLogin(EmployeeAttandenceModel obj1)
-        //{
-        //    connection();
-        //    DataTable dt = new DataTable();
-        //    SqlDataAdapter adp = new SqlDataAdapter();
-
-        //    try
-        //    {
-
-        //        SqlCommand cmd = new SqlCommand("Select * from EmpAtendance   );
-        //        cmd.Parameters.AddWithValue("@Date", obj1.Date);
-
-
-        //        adp.SelectCommand = cmd;
-        //        adp.Fill(dt);
-        //        cmd.Dispose();
-        //        if (dt.Rows.Count > 0)
-        //        {
-        //            obj1.Date = dt.Rows[0]["Date"].;
-
-
-
-        //            return true;
-
-        //        }
-        //        else
-        //        {
-        //            return false;
-
-        //        }
-        //    }
-        //    finally
-        //    {
-        //        dt.Clear();
-        //        dt.Dispose();
-        //        adp.Dispose();
-        //    }
-        //}
+      
         public bool createAttandence(EmployeeAttandenceModel obj)
         {
             connection();
@@ -216,5 +179,33 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 return false;
             }
         }
+
+
+        public int DeleteData(String EmpAtendenceId)
+        {
+            connection();
+            int result;
+            try
+            {
+               
+                SqlCommand com = new SqlCommand("DELETE FROM EmpAtendance where EmpAtendenceId =@EmpAtendenceId", con);
+
+                com.Parameters.AddWithValue("@EmpAtendenceId", EmpAtendenceId);
+            
+
+                con.Open();
+                result = com.ExecuteNonQuery();
+                return result;
+            }
+            catch(Exception er) 
+            {
+                return result = 0;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
     }
 }

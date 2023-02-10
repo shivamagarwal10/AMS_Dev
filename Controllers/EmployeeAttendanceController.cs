@@ -19,35 +19,15 @@ namespace EmployeeAttendenceMangement.Controllers
             int defaSize = (pageSize ?? 10);
             ViewBag.psize = defaSize;
             ModelState.Clear();
-          
-                return View(EmpAttandence_layer.GetMarkAttandence(Convert.ToBoolean(Session["Is_admin"]), Convert.ToInt32(Session["EmployeeId"])).ToList().ToPagedList(pageIndex, defaSize));
             
+            return View(EmpAttandence_layer.GetMarkAttandence(Convert.ToBoolean(Session["Is_admin"]), Convert.ToInt32(Session["EmployeeId"])).ToList().ToPagedList(pageIndex, defaSize));
         }
-      
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-    
-        public ActionResult GetDate( int EmployeeId)
-        {
-            return View();
-
-        }
+        
         public ActionResult CreateAttandence()
         {
-            var date = @DateTime.Today.Date;
-            var date1 = Convert.ToDateTime(Session["Date"]);
-
-            int EmpId = Convert.ToInt32(Session["IsAttenadance"]);
-
-
-            if (EmpId == 0 & date != date1)
-            {
+         
                 return View();
-            }
-
-            return Redirect("EmployeeAttandenceDetail");
+              
         }
 
         // POST: EmployeeAttendance/Create
@@ -105,23 +85,18 @@ namespace EmployeeAttendenceMangement.Controllers
             }
         }
 
-        // GET: EmployeeAttendance/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult EmpAttendanceDelete(String EmpAtendenceId)
         {
-            return View();
-        }
 
-        // POST: EmployeeAttendance/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                EmployeeAttandenceDateLayer EmpAttandence_layer = new EmployeeAttandenceDateLayer();
+                int result = EmpAttandence_layer.DeleteData(EmpAtendenceId);
+                TempData["result3"] = result;
+                ModelState.Clear();
+                return RedirectToAction("EmployeeAttandenceDetail");
             }
-            catch
+            catch(Exception er)
             {
                 return View();
             }

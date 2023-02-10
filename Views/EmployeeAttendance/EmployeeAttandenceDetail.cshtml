@@ -38,152 +38,127 @@
 
 <h3>  Employee Attendance Detail </h3>
 
-          
 
-            @if (Convert.ToInt32(Session["IsAttenadance"]) == 0 & Convert.ToDateTime(Session["Date"]) != @DateTime.Today.Date)
-            {
-            <p>
-                <button type="submit" class="btn-btn-primary">@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
-            </p>
 
-            }
+@if (Convert.ToInt32(Session["IsAttenadance"]) == 0 & Convert.ToDateTime(Session["Date"]) != @DateTime.Today.Date)
+{
+    <p>
+        <button type="submit" class="btn-btn-primary">@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
+    </p>
 
-            <table class="table">
-                <tr>
+}
+else
+{
+   
+}
+<table class="table">
+    <tr>
 
-                    <th>
-                        Employee Name
-                    </th>
-                    @*<th>
-                                Project Name
-                        </th>*@
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                        Duration
-                    </th>
-                    <th>
-                        Intime
-                    </th>
-                    <th>
-                        Out Time
-                    </th>
-                    <th>
-                        Latitude
-                    </th>
-                    <th>
-                        Longitude
-                    </th>
+        <th>
+            Employee Name
+        </th>
+        @*<th>
+                    Project Name
+            </th>*@
+        <th>
+            Date
+        </th>
+        <th>
+            Duration
+        </th>
+        <th>
+            Intime
+        </th>
+        <th>
+            Out Time
+        </th>
+        <th>
+            Latitude
+        </th>
+        <th>
+            Longitude
+        </th>
 
-                    <th>
-                        Action
-                    </th>
-                </tr>
+        <th>
+            Action
+        </th>
+    </tr>
 
-                @foreach (var item in Model)
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+         
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @if (item.Intime != null)
                 {
-                    <tr>
+                    @Html.DisplayFor(modelItem => item.Intime).ToString().Substring(0, 5)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Intime)
+                }
+            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.Project_Master.ProjectName)
-                            </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-                        <td>
-                            @if (item.Intime != null)
-                            {
-                                @Html.DisplayFor(modelItem => item.Intime).ToString().Substring(0, 5)
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.Intime)
-                            }
-                        </td>
+            <td>
+                @if (item.OutTime != null)
+                {
+                    @Html.DisplayFor(modelItem => item.OutTime).ToString().Substring(0, 5)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.OutTime)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.longitude)
+            </td>
 
-                        <td>
-                            @if (item.OutTime != null)
-                            {
-                                @Html.DisplayFor(modelItem => item.OutTime).ToString().Substring(0, 5)
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.OutTime)
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.latitude)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.longitude)
-                        </td>
+            <td>
+                @if (item.Duration == "" & Convert.ToBoolean(Session["Is_admin"]) == false)
+                {
+                    @Html.ActionLink("Edit", "UpdateAttendance", new { EmpAtendenceId = item.EmpAtendenceId })
+                }
+                else
+                {
+                    if (Convert.ToBoolean(Session["Is_admin"]) == true)
+                    {
+                        @Html.ActionLink("Edit ||  ", "UpdateAttendance", new { EmpAtendenceId = item.EmpAtendenceId })
 
-                        <td>
-                            @if (item.Duration == "")
-                            {
-                                @Html.ActionLink("Edit", "UpdateAttendance", new { EmpAtendenceId = item.EmpAtendenceId })
-                            }
-                            else
-                            {
-                                if (item.Duration == "NaN:NaN")
-                                {
-                                    @Html.ActionLink("Edit", "UpdateAttendance", new { EmpAtendenceId = item.EmpAtendenceId })
-                                }
-                                else
-                                {
+                        @Html.ActionLink("Delete", "EmpAttendanceDelete", new { EmpAtendenceId = item.EmpAtendenceId }, new { onclick = "return confirm ('Are sure wants to delete?');" })
+                    }
+                    else
+                    {
 
-                                }
-                            }
-
-                            @*@Html.ActionLink("Edit", "EmpAttendanceEdit", new { })*@
-                            @*@Html.ActionLink("Delete", "EmpAttendanceDelete", new { EmpAtendenceId = item.EmpAtendenceId }, new { onclick = "return confirm ('Are sure wants to delete?');" })*@
-                        </td>
-                    </tr>
+                    }
                 }
 
-            </table>
+            </td>
+        </tr>
+    }
 
-            @using (Html.BeginForm("EmployeeAttandenceDetail", "EmployeeAttendance", FormMethod.Get, new { id = "form1" }))
+</table>
 
-            {
-                <div id='Paging' style="padding-left:450px">
+@using (Html.BeginForm("EmployeeAttandenceDetail", "EmployeeAttendance", FormMethod.Get, new { id = "form1" }))
 
-                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-                    of @Model.PageCount
+{
+    <div id='Paging' style="padding-left:450px">
 
-                    @Html.PagedListPager(Model, page => Url.Action("EmployeeAttandenceDetail", new { page, pageSize = ViewBag.psize }))
-                </div>
-            }
-            <script type="text/javascript">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount
 
-                $(function () {
-
-                    $(function myFunction() {
-                        debugger;
-
-                        $.ajax
-                            ({
-                                method: "POST",
-                                url: "/EmployeeAttendance/CreateAttandence/",
-                                data: { EmployeeId: EmployeeId }
-                            })
-                            .done(function (msg) {
-                                if (msg == 1) {
-                                    $("#divMessage").html("EmailId already registerted");
-                                } else {
-                                    $("#divMessage").html("");
-                                }
-
-                            });
-
-                    })
-                });
-
-            </script>
+        @Html.PagedListPager(Model, page => Url.Action("EmployeeAttandenceDetail", new { page, pageSize = ViewBag.psize }))
+    </div>
+}

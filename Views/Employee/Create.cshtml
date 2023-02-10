@@ -305,11 +305,12 @@
 
             </div>
             @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Password No--", Id = "txtPassword" } })
-                @Html.ValidationMessage("Password", "", new { style = "color:red " })
+        <div class="col-md-3">
+            @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Password No--", Id = "txtPassword" } })
+            @Html.ValidationMessage("Password", "", new { style = "color:red " })
+            <div id="msgPassword" style="color:red; font-weight:bold;"></div>
 
-            </div>
+        </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-5 col-md-10">
@@ -368,7 +369,11 @@
 </script>
 <script type="text/javascript">
     $(function () {
-   
+
+        
+
+
+
         $('#DateofBirth').change(function () {
             $("#DateofBirth").next('.validation').hide();
             var age = CalculateAge();
@@ -455,23 +460,25 @@
         return true;
     }
 </script>
+
+
 <script>
 
     $(function () {
         debugger;
+
         $("#txtPassword").change(function () {
             debugger;
-
 
             var email = $("#txtPassword").val();
             var paswd = /^[a-zA-Z0-9!#$%^&*]{6,16}$/;
             if (paswd.test(email) ) {
-                alert('Correct, try another...')
-                return true;
-            }
-            else {
-                alert('Wrong...!')
+                $("#msgPassword").html("password contain between 5 to 10 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
                 return false;
+            }
+            else
+            {
+                $("#msgPassword").html("");
             }
 
         })

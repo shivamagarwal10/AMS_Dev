@@ -299,30 +299,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
         }
 
-        //To delete Employee details    
-        //public bool DeleteEmployee(int Id)
-        //{
-
-        //    connection();
-        //    SqlCommand com = new SqlCommand("DeleteEmpById", con);
-
-        //    com.CommandType = CommandType.StoredProcedure;
-        //    com.Parameters.AddWithValue("@EmpId", Id);
-
-        //    con.Open();
-        //    int i = com.ExecuteNonQuery();
-        //    con.Close();
-        //    if (i >= 1)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-
-        //        return false;
-        //    }
-        //}
-
 
         public bool GetLogin(EmployeeCreateModel obj1)
         {
@@ -333,7 +309,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             try
             {
-
                 SqlCommand cmd = new SqlCommand("Select emp.EmployeeId,emp.FirstName,emp.LastName,emp.Is_Admin,emp.Password,emp.Password,case when cast(att.Date as date) = " +
                         "cast(GETDATE() as date) then 1 else 0 end AttandenceDate " +
                         "from Employee emp left join EmpAtendance att on att.EmployeeId = " +
@@ -350,7 +325,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                     obj1.FirstName = dt.Rows[0]["FirstName"].ToString();
                     obj1.LastName = dt.Rows[0]["LastName"].ToString();
 
-                    
+
                     obj1.Is_admin = Convert.ToBoolean(dt.Rows[0]["Is_admin"]);
                     
                     obj1.EmployeeId = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
@@ -375,13 +350,11 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         }
 
 
-
         public bool GetForgetPassword(EmployeeCreateModel obj)
         {
             connection();
 
             SqlCommand com = new SqlCommand("Update Employee Set Password = @password where EmailId =@EmailId ", con);
-
             com.Parameters.AddWithValue("@EmailId", obj.EmailId);
             com.Parameters.AddWithValue("@Password", obj.Password);
 
@@ -390,9 +363,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             con.Close();
             if (i >= 1)
             {
-
                 return true;
-
             }
             else
             {
@@ -402,8 +373,5 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
         }
     }
-
-
-
 
 }
