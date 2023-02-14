@@ -26,25 +26,48 @@ namespace EmployeeAttendenceMangement.Controllers
             ModelState.Clear();
             
             return View(access_Layer.GetEmployee(Convert.ToBoolean(Session["Is_admin"]), Convert.ToInt32(Session["EmployeeId"])).ToList().ToPagedList(pageIndex, defaSize));
+        }
 
-        }   
-        public ActionResult Create()
+        //public ActionResult ValidatealtEmailId1()
+        //{
+        //    EmployeeCreateModel model = new EmployeeCreateModel();
+        //    AMS_Access_Layer access_Layer = new AMS_Access_Layer();
+        //    ViewBag.ValidateEmailId1 = access_Layer.ValidateEmailId1();           
+        //    return View(access_Layer.ValidateEmailId1());
+        //}
+
+
+        public int ValidateEmailId(String EmailId)
         {
-            ViewBag.CountryList = CountryList();
-            EmployeeCreateModel model = new EmployeeCreateModel();
-            int maxId = access_Layer.GetEmployeeId(model);
-
-            if (maxId == 0)
+            var EmailIdData  = access_Layer.ValidateEmailId(EmailId);
+            if (EmailIdData == 0)
             {
-                model.EmployeeId = 2019-000001;
+                return 0;
             }
             else
             {
-                model.EmployeeId = Convert.ToInt32(DateTime.Now.Year.ToString() + "" + "000" + "" + (model.EmployeeId+1).ToString());
+                return 1;
+            }
+            
+        }
+       
+        public ActionResult Create()
+        {
+            ViewBag.CountryList = CountryList();
+         
+            EmployeeCreateModel model = new EmployeeCreateModel();
+            int maxId = access_Layer.GetEmployeeId(model);
+            var data = model.EmployeeId;
+            var Data1 = data.ToString().Substring(0, 4);
+            if (Data1 != DateTime.Now.Year.ToString())
+            {
+                model.EmployeeId = Convert.ToInt32(DateTime.Now.Year.ToString() + "" + "000" + "" + (1).ToString());
+            }
+            else
+            {
+                model.EmployeeId = model.EmployeeId+1;
                
             }
-
-
             if (Convert.ToBoolean(Session["Is_admin"]) == true)
             {
                 return View(model);
@@ -111,21 +134,7 @@ namespace EmployeeAttendenceMangement.Controllers
                 return View();
             }
         }
-        public string ValidateEmailId(string emailId)
-        {
-            AMS_Access_Layer access_Layer = new AMS_Access_Layer();
-        
-            if (access_Layer.ValidateEmailId(emailId))
-            {
-                return "1";
-            }
-            else
-            {
-                return "0";
-            }
-
-        }
-
+     
         [HttpPost]
         public ActionResult Create(EmployeeCreateModel model)
         {
@@ -135,15 +144,26 @@ namespace EmployeeAttendenceMangement.Controllers
                 {
                     AMS_Access_Layer access_Layer = new AMS_Access_Layer();
 
+                 var date1= access_Layer.ValidatealtEmailId(Convert.ToString(model.AlternateEmailId));
+                       
+
                     if (access_Layer.AddEmployee(model))
                     {
                         ViewBag.Message = "Employee details added successfully";
                         return RedirectToAction("EmployeeDetail");
                     }
                 }
+                ViewBag.CountryList =CountryList();
+                ViewBag.CountryList1 = GetStateByEmp(Convert.ToInt32(model.CountryId));
+                TempData["EmailValidation"] = "EmailId all ready registered";
 
-                TempData["EmailValidation"] = "EmailId already  registerted";
-                return View();
+               if( model.Contact_No == model.AlternateContact_No)
+                {
+                    TempData["AltContact_No"] = "Primary Contact Number and Alternate Contact Number should not be same,Type again !";
+                }
+                        
+
+                return View(model);
             }
             catch (Exception er)
             {

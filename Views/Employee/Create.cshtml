@@ -165,10 +165,10 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
 
-            @Html.Label("First Name", htmlAttributes: new { @class = "control-label col-md-2"  })
+            @Html.Label("First Name", htmlAttributes: new { @class = "control-label col-md-2" })
 
             <div class="col-md-3">
-                @Html.HiddenFor(model => model.EmployeeId )
+                @Html.HiddenFor(model => model.EmployeeId)
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "       --Enter Your  First Name--", onKeyPress = "return ValidateAlpha(event)" } })
                 @TempData["msgName"]
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { style = "color:red " })
@@ -240,11 +240,13 @@
 
             </div>
             @Html.Label("Alternate Contact No", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", Id = "AltContactTxt", required = "required", maxlength = "10", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
-                @Html.ValidationMessageFor(model => model.AlternateContact_No, "", new { style = "color:red " })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", Id = "AltContactTxt", required = "required", maxlength = "10", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
+            @Html.ValidationMessageFor(model => model.AlternateContact_No, "", new { style = "color:red " })
+          
+            <div id="AltdivMessage" style="color:red; font-weight:bold;">  @TempData["AltContact_No"]</div>
 
-            </div>
+        </div>
 
         </div>
         <div class="form-group">
@@ -297,7 +299,7 @@
                 @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = " --Enter Your Emailid--", AutoPostBack = "true", Id = "onEmailCheck" } })
                 @Html.ValidationMessageFor(model => model.EmailId, "", new { style = "color:red " })
 
-                <div id="divMessage" style="color:red; font-weight:bold;"></div>
+                <div id="divMessage" style="color:red; font-weight:bold;">@TempData["EmailValidation"]</div>
                 @*<div class='validation' style='color:red;margin-bottom: 20px;'> @TempData["EmailValidation"] </div>*@
 
             </div>
@@ -307,17 +309,17 @@
             <div class="col-md-3">
                 @Html.EditorFor(model => model.AlternateEmailId, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = " --Enter Your Emailid--", AutoPostBack = "true", Id = "onAltEmailCheck" } })
                 @Html.ValidationMessageFor(model => model.AlternateEmailId, "", new { style = "color:red " })
-
+               
                 <div id="AltdivMessage" style="color:red; font-weight:bold;"></div>
                 @*<div class='validation' style='color:red;margin-bottom: 20px;'> @TempData["EmailValidation"] </div>*@
 
             </div>
             @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-3">
-            @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Password No--", Id = "txtPassword" } })
-            @Html.ValidationMessage("Password", "", new { style = "color:red " })
-            <div id="msgPassword" style="color:red; font-weight:bold;"></div>
-        </div>
+            <div class="col-md-3">
+                @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Password No--", Id = "txtPassword" } })
+                @Html.ValidationMessage("Password", "", new { style = "color:red " })
+                <div id="msgPassword" style="color:red; font-weight:bold;"></div>
+            </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-5 col-md-10">
@@ -334,7 +336,37 @@
 
 
 <script>
-    $('#AltContactTxt').change(function () {
+    $('#onAltEmailCheck').change(function () {
+        debugger;
+
+        $("#onAltEmailCheck").next('.validation').hide();
+
+        if ($("#onAltEmailCheck").val() == $("#onEmailCheck").val()) {
+
+            $("#onAltEmailCheck").after("<div class='validation' style='color:red;margin-bottom: 20px;'> Primary Contact Number and Alternate Contact Number should not be same,Type again ! </div>");
+        }
+        else {
+            $("#onAltEmailCheck").next('.validation').hide();
+        }
+    });
+</script>
+<script>
+ 
+
+    function getLocation()
+    {
+        if ($("#AltContactTxt").val() == $("#ContactTxt").val()) {
+
+            $("#AltContactTxt").after("<div class='validation' style='color:red;margin-bottom: 20px;'> Primary EmailId  and Alternate EmailId should not be same,Type again ! </div>");
+        }
+        else {
+            $("#AltContactTxt").next('.validation').hide();
+        }
+    }
+
+
+    
+    $('#AltContactTxt').blur(function () {
         debugger;
 
         $("#AltContactTxt").next('.validation').hide();
@@ -355,7 +387,7 @@
             var id = $(this).val();
             $("#St").empty();
             $.get("/Employee/State_Bind", { CountryId: $("#Cid").val() }, function (data) {
-                debugger;
+
                 var v = "<option>---Select---</option>";
                 $.each(data, function (i, v1) {
                     v += "<option value=" + v1.Value + ">" + v1.Text + "</option>";
@@ -367,9 +399,8 @@
     });
 
     $(function () {
-
+        debugger;
         $("#onEmailCheck").blur(function () {
-           
             var email = $("#onEmailCheck").val();
 
             $.ajax
@@ -377,64 +408,20 @@
                     method: "POST",
                     url: "/Employee/ValidateEmailId/",
                     data: { emailId: email }
+
                 })
                 .done(function (msg) {
                     if (msg == 1) {
                         debugger;
                         $("#divMessage").html("EmailId all ready registered");
-                       
-                    } else
-                    {
-                        $.ajax
-                            ({
-                                method: "POST",
-                                url: "/Employee/ValidateEmailId/",
-                                data: { emailId: email }
-                            })
-                         
-                    }
-
-                });
-
-        })
-    });
-    $(function () {
-
-        $("#onAltEmailCheck").blur(function () {       
-            var email = $("#onAltEmailCheck").val();
-            $.ajax
-                ({
-                    method: "POST",
-                    url: "/Employee/ValidateEmailId/",
-                    data: { emailId: email }
-                })
-                .done(function (msg) {
-                    if (msg == 1) {
-                        debugger;
-                        $("#AltdivMessage").html("EmailId all ready registered");
-                       
+                        return false;
                     } else {
-                        $("#AltdivMessage").html("");
                         debugger;
-                        $("#onAltEmailCheck").next('.validation').hide();
-
-                        if ($("#onAltEmailCheck").val() == $("#onEmailCheck").val()) {
-
-                            $("#onAltEmailCheck").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Emaild  and ALternate EmailId should not be same,Type again ! </div>");
-                            
-
-                        }
-                        else {
-                            $("#onAltEmailCheck").next('.validation').hide();
-                           
-                        }
+                        $("#divMessage").html("");
                     }
-
                 });
-
         })
     });
-
 </script>
 <script type="text/javascript">
     $(function () {
@@ -460,19 +447,16 @@
         debugger;
         var age = CalculateAge1();
         var age1 = CalculateAge2();
-        if (age < 18 ) {
+        if (age < 18) {
             $("#Emp_Joining_Date").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Joining date must be greater than 18year to  Date of Birth</div>");
             document.getElementById("Emp_Joining_Date").value = "";
         }
         else {
             $("#Emp_Joining_Date").next('.validation').hide();
-            debugger;
-            if (age1 < 0)
-            {
+            if (age1 < 0) {
                 $("#Emp_Joining_Date").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Joining date should not be greater than today's date</div>");
                 document.getElementById("Emp_Joining_Date").value = "";
             }
-
         }
     });
 
@@ -482,46 +466,36 @@
         var dob = $("#DateofBirth").val();
         dob = new Date(dob);
         doj = new Date(doj);
-
         var today = new Date();
-
         var age = Math.floor((doj - dob) / (365.25 * 24 * 60 * 60 * 1000));
         return age;
 
     }
 
     function CalculateAge() {
-       
         var dob = $("#DateofBirth").val();
         dob = new Date(dob);
-
         var today = new Date();
         var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
-
         return age;
     }
     function CalculateAge2() {
         debugger;
         var dob = $("#Emp_Joining_Date").val();
         dob = new Date(dob);
-
         var today = new Date();
         var age1 = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
         return age1;
     }
-
 </script>
 
 
 
 <script type="text/javascript">
-
-
     function textAreaAdjust(element) {
         element.style.height = "1px";
         element.style.height = (25 + element.scrollHeight) + "px";
     }
-
 </script>
 
 <script>
@@ -547,23 +521,23 @@
 <script>
 
     $(function () {
-    
+
 
         $("#txtPassword").change(function () {
 
 
             var email = $("#txtPassword").val();
             var paswd = /^[a-zA-Z0-9!#$%^&*]{6,16}$/;
-            if (paswd.test(email) ) {
-                $("#msgPassword").html("password contain between 5 to 10 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");        
+            if (paswd.test(email)) {
+                $("#msgPassword").html("password contain between 5 to 10 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
             }
-            else
-            {
+            else {
                 $("#msgPassword").html("");
-               
+
             }
 
         })
     });
 
 </script>
+

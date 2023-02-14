@@ -133,8 +133,33 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             return EmpList;
         }
+        //public List<EmployeeCreateModel> ValidateEmailId1()
+        //{
+        //    connection();
+        //    List<EmployeeCreateModel> EmpList = new List<EmployeeCreateModel>();
 
-        public bool ValidateEmailId(string emailId)
+
+        //    SqlCommand com = new SqlCommand("select EmailId from Employee", con);
+
+        //    SqlDataAdapter da = new SqlDataAdapter(com);
+        //    DataTable dt = new DataTable();
+        //    da.Fill(dt);
+        //    con.Close();
+
+        //    foreach (DataRow dr in dt.Rows)
+        //    {
+        //       EmpList.Add(
+
+        //            new EmployeeCreateModel
+        //            {
+        //                EmailId = Convert.ToString(dr["EmailId"]),
+        //            }
+        //            );
+        //    }
+
+        //    return EmpList;
+        //}
+        public int ValidateEmailId(string emailId)
         {   
             connection();
             DataTable dt = new DataTable();
@@ -146,27 +171,48 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             cmd.Dispose();
             if (dt.Rows.Count > 0)
             {
-                return true;
+                return 1;
             }
             else
             {
-                return false;
+                return 0;
             }
         }
+        public int ValidatealtEmailId(string AlternateEmailId)
+        {
+            connection();
+            DataTable dt = new DataTable();
+            SqlDataAdapter adp = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("Select AlternateEmailId from Employee  where AlternateEmailId = @AlternateEmailId ", con);
+            cmd.Parameters.AddWithValue("@AlternateEmailId", AlternateEmailId);
+            adp.SelectCommand = cmd;
+            adp.Fill(dt);
+            cmd.Dispose();
+            if (dt.Rows.Count > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+
         public int GetEmployeeId(EmployeeCreateModel model)
         {
             connection();
             DataTable dt = new DataTable();
             SqlDataAdapter adp = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand("select EmployeeId from Employee ", con);
+            SqlCommand cmd = new SqlCommand("select Top 1(EmployeeId) from Employee order by EmployeeId desc ", con);
             
             adp.SelectCommand = cmd;
             adp.Fill(dt);
             cmd.Dispose();
             if (dt.Rows.Count > 0)
             {
-                model.EmployeeId = dt.Rows.Count;
-               
+                model.EmployeeId  = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
+
                 return 1;
             }
             else
@@ -179,45 +225,55 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         public bool AddEmployee(EmployeeCreateModel obj)
         {
             connection();
-            var query = "Insert into Employee ( EmployeeId,AlternateEmailId, FirstName,City,Address," +
-                "Marital_status,Emp_Joining_Date,CountryId,StateId,AlternateContact_No," +
-                "LastName,PinCode,DateofBirth,Gender," +
-                "Contact_No,Password,EmailId) " +
-                "values( @EmployeeId,@AlternateEmailId,@FirstName,@City ,@Address,@Marital_status," +
-                "@Emp_Joining_Date,@CountryId,@StateId,@AlternateContact_No,@LastName,@PinCode," +
-                "@DateofBirth,@Gender,@Contact_No,@Password,@EmailId)";
 
-            SqlCommand com = new SqlCommand(query, con);
-            com.Parameters.AddWithValue("@EmployeeId", obj.EmployeeId);
-            com.Parameters.AddWithValue("@AlternateEmailId", obj.AlternateEmailId);
-            com.Parameters.AddWithValue("@FirstName", obj.FirstName);
-            com.Parameters.AddWithValue("@City", obj.City);
-            com.Parameters.AddWithValue("@Address", obj.Address);
-            com.Parameters.AddWithValue("@EmailId", obj.EmailId);
-            com.Parameters.AddWithValue("@CountryId", obj.CountryId);
-            com.Parameters.AddWithValue("@StateId", obj.StateId);
-            com.Parameters.AddWithValue("@Marital_status", obj.Marital_status);
-            com.Parameters.AddWithValue("@Gender", obj.Gender);
-            com.Parameters.AddWithValue("@LastName", obj.LastName);
-            com.Parameters.AddWithValue("@Password", obj.Password);
-            com.Parameters.AddWithValue("@PinCode", obj.PinCode);
-            com.Parameters.AddWithValue("@AlternateContact_No", obj.AlternateContact_No);
-            com.Parameters.AddWithValue("@Contact_No", obj.Contact_No);
-            com.Parameters.AddWithValue("@Emp_Joining_Date", obj.Emp_Joining_Date);
-            com.Parameters.AddWithValue("@DateofBirth", obj.DateofBirth);
-            con.Open();
-            int i = com.ExecuteNonQuery();
-            con.Close();
-            if (i >= 1)
+          int ckhEmail=  ValidateEmailId(obj.EmailId);
+
+            if (ckhEmail > 0)
             {
-                return true;
+                return false;
+                
             }
             else
             {
-                return false;
+                var query = "Insert into Employee ( EmployeeId,AlternateEmailId, FirstName,City,Address," +
+                    "Marital_status,Emp_Joining_Date,CountryId,StateId,AlternateContact_No," +
+                    "LastName,PinCode,DateofBirth,Gender," +
+                    "Contact_No,Password,EmailId) " +
+                    "values( @EmployeeId,@AlternateEmailId,@FirstName,@City ,@Address,@Marital_status," +
+                    "@Emp_Joining_Date,@CountryId,@StateId,@AlternateContact_No,@LastName,@PinCode," +
+                    "@DateofBirth,@Gender,@Contact_No,@Password,@EmailId)";
+
+                SqlCommand com = new SqlCommand(query, con);
+                com.Parameters.AddWithValue("@EmployeeId", obj.EmployeeId);
+                com.Parameters.AddWithValue("@AlternateEmailId", obj.AlternateEmailId);
+                com.Parameters.AddWithValue("@FirstName", obj.FirstName);
+                com.Parameters.AddWithValue("@City", obj.City);
+                com.Parameters.AddWithValue("@Address", obj.Address);
+                com.Parameters.AddWithValue("@EmailId", obj.EmailId);
+                com.Parameters.AddWithValue("@CountryId", obj.CountryId);
+                com.Parameters.AddWithValue("@StateId", obj.StateId);
+                com.Parameters.AddWithValue("@Marital_status", obj.Marital_status);
+                com.Parameters.AddWithValue("@Gender", obj.Gender);
+                com.Parameters.AddWithValue("@LastName", obj.LastName);
+                com.Parameters.AddWithValue("@Password", obj.Password);
+                com.Parameters.AddWithValue("@PinCode", obj.PinCode);
+                com.Parameters.AddWithValue("@AlternateContact_No", obj.AlternateContact_No);
+                com.Parameters.AddWithValue("@Contact_No", obj.Contact_No);
+                com.Parameters.AddWithValue("@Emp_Joining_Date", obj.Emp_Joining_Date);
+                com.Parameters.AddWithValue("@DateofBirth", obj.DateofBirth);
+                con.Open();
+                int i = com.ExecuteNonQuery();
+                con.Close();
+                if (i >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
-
-
         }
 
 

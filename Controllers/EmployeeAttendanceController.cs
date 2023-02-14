@@ -23,13 +23,10 @@ namespace EmployeeAttendenceMangement.Controllers
         }
         
         public ActionResult CreateAttandence()
-        {
-         
-                return View();
-              
+        {      
+                return View();            
         }
 
-        // POST: EmployeeAttendance/Create
         [HttpPost]
         public ActionResult CreateAttandence(EmployeeAttandenceModel model)
         {
