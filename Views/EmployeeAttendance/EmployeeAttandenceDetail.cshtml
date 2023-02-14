@@ -158,6 +158,7 @@
 
 
 <script>
+
     document.getElementById("btnhide").hidden = true;
     $(function () 
     {
@@ -169,11 +170,11 @@
             })
             .done(function (msg) {
                 debugger;
-                if (msg == 1) {
+                if (msg == 1)
+                {
                     document.getElementById("btnhide").hidden = true;
                 }
-                else
-                {
+                else {
                     document.getElementById("btnhide").hidden = false;
                 }
             });
