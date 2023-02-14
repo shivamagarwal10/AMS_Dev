@@ -51,7 +51,9 @@
             </div>
             @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-3">
-            @Html.EditorFor(model => model.OutTime, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "TxtOuttime", @Value = @DateTime.Now.ToShortTimeString(), @readonly = "readonly" } })
+       
+
+            @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", @Value = @DateTime.Now.ToShortTimeString(), style = "width:260px", @readonly = "readonly", Id = "TxtOuttime" })
             @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
         </div>
         </div>
