@@ -40,7 +40,7 @@
 
 
 <p>
-    <button type="submit" class="btn-btn-primary" id="btnhide">@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
+    <button type="submit" class="btn-btn-primary" id="btnhide" >@Html.ActionLink("Create New", "CreateAttandence", "EmployeeAttendance")</button>
     
 </p>
 
@@ -158,11 +158,10 @@
 
 
 <script>
-    $("#btnhide").hide();
+    document.getElementById("btnhide").hidden = true;
     $(function () 
     {
-
-        $.ajax
+      $.ajax
             ({
                 method: "GET",
                 url: "/EmployeeAttendance/CreateBtnHide/",
@@ -170,9 +169,12 @@
             })
             .done(function (msg) {
                 debugger;
-                if (msg == 1)
+                if (msg == 1) {
+                    document.getElementById("btnhide").hidden = true;
+                }
+                else
                 {
-                    $("#btnhide").hide();
+                    document.getElementById("btnhide").hidden = false;
                 }
             });
     });
