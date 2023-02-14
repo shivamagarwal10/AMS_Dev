@@ -53,7 +53,7 @@
         <div class="col-md-3">
        
 
-            @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", @Value = @DateTime.Now.ToShortTimeString(), style = "width:260px", @readonly = "readonly", Id = "TxtOuttime" })
+            @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", @Value = @DateTime.Now.ToShortTimeString(), style = "width:260px", @readonly = "readonly", Id = "TxtOuttime", required = "required" })
             @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
         </div>
         </div>
