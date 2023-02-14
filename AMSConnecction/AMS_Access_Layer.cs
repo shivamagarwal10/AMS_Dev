@@ -139,7 +139,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             connection();
             DataTable dt = new DataTable();
             SqlDataAdapter adp = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand("Select EmailId , EmployeeId from Employee ", con);
+            SqlCommand cmd = new SqlCommand("Select EmailId from Employee  where EmailId=@EmailId ", con);
             cmd.Parameters.AddWithValue("@emailId", emailId);
             adp.SelectCommand = cmd;
             adp.Fill(dt);
@@ -179,16 +179,17 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         public bool AddEmployee(EmployeeCreateModel obj)
         {
             connection();
-            var query = "Insert into Employee ( EmployeeId, FirstName,City,Address," +
+            var query = "Insert into Employee ( EmployeeId,AlternateEmailId, FirstName,City,Address," +
                 "Marital_status,Emp_Joining_Date,CountryId,StateId,AlternateContact_No," +
                 "LastName,PinCode,DateofBirth,Gender," +
                 "Contact_No,Password,EmailId) " +
-                "values( @EmployeeId,@FirstName,@City ,@Address,@Marital_status," +
+                "values( @EmployeeId,@AlternateEmailId,@FirstName,@City ,@Address,@Marital_status," +
                 "@Emp_Joining_Date,@CountryId,@StateId,@AlternateContact_No,@LastName,@PinCode," +
                 "@DateofBirth,@Gender,@Contact_No,@Password,@EmailId)";
 
             SqlCommand com = new SqlCommand(query, con);
             com.Parameters.AddWithValue("@EmployeeId", obj.EmployeeId);
+            com.Parameters.AddWithValue("@AlternateEmailId", obj.AlternateEmailId);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@City", obj.City);
             com.Parameters.AddWithValue("@Address", obj.Address);

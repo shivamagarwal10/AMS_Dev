@@ -34,7 +34,6 @@ namespace EmployeeAttendenceMangement.Controllers
             EmployeeCreateModel model = new EmployeeCreateModel();
             int maxId = access_Layer.GetEmployeeId(model);
 
-         
             if (maxId == 0)
             {
                 model.EmployeeId = 2019-000001;
