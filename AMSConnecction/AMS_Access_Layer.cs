@@ -6,7 +6,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
 namespace EmployeeAttendenceMangement.AMSConnecction
 {
     public class AMS_Access_Layer
@@ -140,7 +139,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             connection();
             DataTable dt = new DataTable();
             SqlDataAdapter adp = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand("Select EmailId from Employee  where   EmailId = @emailId ", con);
+            SqlCommand cmd = new SqlCommand("Select EmailId , EmployeeId from Employee ", con);
             cmd.Parameters.AddWithValue("@emailId", emailId);
             adp.SelectCommand = cmd;
             adp.Fill(dt);
@@ -154,24 +153,42 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 return false;
             }
         }
-
+        public int GetEmployeeId(EmployeeCreateModel model)
+        {
+            connection();
+            DataTable dt = new DataTable();
+            SqlDataAdapter adp = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("select EmployeeId from Employee ", con);
+            
+            adp.SelectCommand = cmd;
+            adp.Fill(dt);
+            cmd.Dispose();
+            if (dt.Rows.Count > 0)
+            {
+                model.EmployeeId = dt.Rows.Count;
+               
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+       
 
         public bool AddEmployee(EmployeeCreateModel obj)
         {
             connection();
-            var query = "Insert into Employee (FirstName,City,Address," +
+            var query = "Insert into Employee ( EmployeeId, FirstName,City,Address," +
                 "Marital_status,Emp_Joining_Date,CountryId,StateId,AlternateContact_No," +
                 "LastName,PinCode,DateofBirth,Gender," +
                 "Contact_No,Password,EmailId) " +
-                "values(@FirstName,@City ,@Address,@Marital_status," +
+                "values( @EmployeeId,@FirstName,@City ,@Address,@Marital_status," +
                 "@Emp_Joining_Date,@CountryId,@StateId,@AlternateContact_No,@LastName,@PinCode," +
-                "@DateofBirth,@Gender,@Contact_No,@Password,@EmailId )";
-
-
-            //SqlCommand comm = new SqlCommand(query1, con);
-
+                "@DateofBirth,@Gender,@Contact_No,@Password,@EmailId)";
 
             SqlCommand com = new SqlCommand(query, con);
+            com.Parameters.AddWithValue("@EmployeeId", obj.EmployeeId);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@City", obj.City);
             com.Parameters.AddWithValue("@Address", obj.Address);
@@ -187,9 +204,7 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             com.Parameters.AddWithValue("@Contact_No", obj.Contact_No);
             com.Parameters.AddWithValue("@Emp_Joining_Date", obj.Emp_Joining_Date);
             com.Parameters.AddWithValue("@DateofBirth", obj.DateofBirth);
-
             con.Open();
-
             int i = com.ExecuteNonQuery();
             con.Close();
             if (i >= 1)
@@ -260,8 +275,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 SqlCommand com = new SqlCommand("Update Employee set Status =" + 0 + "  where  EmployeeId =@EmployeeId", con);
 
                 com.Parameters.AddWithValue("@EmployeeId", EmployeeId);
-
-
                 con.Open();
                 result = com.ExecuteNonQuery();
                 return result;
@@ -328,13 +341,10 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             try
             {
-                SqlCommand cmd = new SqlCommand("Select emp.EmployeeId,emp.FirstName,emp.LastName,emp.Is_Admin,emp.Password,emp.Password,case when cast(att.Date as date) = " +
-                        "cast(GETDATE() as date) then 1 else 0 end AttandenceDate " +
-                        "from Employee emp left join EmpAtendance att on att.EmployeeId = " +
-                        "emp.EmployeeId and cast(att.Date as date) = cast(GETDATE() as date) where emp.EmailId = @EmailId and   emp.Password =@Password", con);
+                SqlCommand cmd = new SqlCommand("Select EmployeeId,FirstName,LastName,Is_Admin, Status from Employee where EmailId = @EmailId and  Password = @Password and Status = 'True'", con);
                 cmd.Parameters.AddWithValue("@EmailId", obj1.EmailId.Trim());
                 cmd.Parameters.AddWithValue("@password", obj1.Password.Trim());
-                cmd.Parameters.AddWithValue("@Is_admin", obj1.Is_admin.ToString());
+                cmd.Parameters.AddWithValue("@Is_admin", obj1.Is_admin.ToString()); 
 
                 adp.SelectCommand = cmd;
                 adp.Fill(dt);
@@ -344,18 +354,14 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                     obj1.FirstName = dt.Rows[0]["FirstName"].ToString();
                     obj1.LastName = dt.Rows[0]["LastName"].ToString();
 
-                    obj1.Is_admin = Convert.ToBoolean(dt.Rows[0]["Is_admin"]);
-                    
+                    obj1.Is_admin = Convert.ToBoolean(dt.Rows[0]["Is_admin"]);                    
                     obj1.EmployeeId = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
-                    obj1.IsAttenadance = dt.Rows[0]["AttandenceDate"].ToString();
 
                     return true;
                 }
-
                 else
                 {
                     return false;
-
                 }
             }
             finally
@@ -370,7 +376,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         public bool GetForgetPassword(EmployeeCreateModel obj)
         {
             connection();
-
             SqlCommand com = new SqlCommand("Update Employee Set Password = @password where EmailId =@EmailId ", con);
             com.Parameters.AddWithValue("@EmailId", obj.EmailId);
             com.Parameters.AddWithValue("@Password", obj.Password);
@@ -384,11 +389,8 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             }
             else
             {
-
                 return false;
             }
-
         }
     }
-
 }

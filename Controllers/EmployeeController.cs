@@ -31,11 +31,25 @@ namespace EmployeeAttendenceMangement.Controllers
         public ActionResult Create()
         {
             ViewBag.CountryList = CountryList();
-            //ViewBag.CountryList1 = CountryList1();
+            EmployeeCreateModel model = new EmployeeCreateModel();
+            int maxId = access_Layer.GetEmployeeId(model);
+
+            var Data = model.EmployeeId.ToString();
+            var Data1 = Data.Substring(0, 2);
+            if (maxId == 0)
+            {
+                model.EmployeeId = 2019-000001;
+            }
+            else
+            {
+                model.EmployeeId = Convert.ToInt32(DateTime.Now.Year.ToString() + "" + "000" + "" + (model.EmployeeId+1).ToString());
+               
+            }
+
 
             if (Convert.ToBoolean(Session["Is_admin"]) == true)
             {
-                return View();
+                return View(model);
             }
 
             return Redirect("EmployeeDetail");
@@ -113,8 +127,6 @@ namespace EmployeeAttendenceMangement.Controllers
             }
 
         }
-
-
 
         [HttpPost]
         public ActionResult Create(EmployeeCreateModel model)
@@ -219,12 +231,12 @@ namespace EmployeeAttendenceMangement.Controllers
                     AMS_Access_Layer access_Layer = new AMS_Access_Layer();
 
                     if (access_Layer.GetLogin(model))
-                    {
+                    { 
                         Session["FirstName"] = model.FirstName;
                         Session["Is_admin"] = model.Is_admin;
                         Session["LastName"] = model.LastName;                       
                         Session["EmployeeId"] = model.EmployeeId;
-                        Session["IsAttenadance"] = model.IsAttenadance;
+                     
 
                         ViewBag.Message = "Employee details added successfully";
                         return RedirectToAction("Index", "Home");

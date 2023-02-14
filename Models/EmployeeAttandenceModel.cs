@@ -22,7 +22,7 @@ namespace EmployeeAttendenceMangement.Models
       
         public string Duration { get; set; }            
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Date { get; set; }
 
         

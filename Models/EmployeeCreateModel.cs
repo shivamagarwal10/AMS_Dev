@@ -12,7 +12,7 @@ namespace EmployeeAttendenceMangement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EmployeeCreateModel()
         {
-           
+
             this.EmployeeAtendances = new HashSet<EmployeeAttandenceModel>();
         }
         public int EmployeeId { get; set; }
@@ -21,6 +21,13 @@ namespace EmployeeAttendenceMangement.Models
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Please enter a valid e-mail adress")]
         [DataType(DataType.EmailAddress)]
         public string EmailId { get; set; }
+
+        [NotMapped]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Please enter a valid e-mail adress")]
+        
+        [DataType(DataType.EmailAddress)]
+        public String AlternateEmail {get ;set ;}
+
 
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Numbers & Special characters are not allowed !!")]
         [Display(Name = "First Name *")]
@@ -49,7 +56,6 @@ namespace EmployeeAttendenceMangement.Models
         public string Contact_No { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Alternate No , AlterNate No required 10 digits only !!")]
         public string AlternateContact_No { get; set; }
 

@@ -51,7 +51,7 @@
             </div>
             @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.EditorFor(model => model.OutTime, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "TxtOuttime" } })
+                @Html.EditorFor(model => model.OutTime, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "TxtOuttime", @Value = @DateTime.Now.ToShortTimeString(), @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -98,7 +98,7 @@
 
 <script language="javascript">
 
-    $('#TxtOuttime').change(function () {
+    $('#TxtOuttime').ready(function () {
         debugger;
         var start = $("#TxtIntime").val();
         var end = $("#TxtOuttime").val();

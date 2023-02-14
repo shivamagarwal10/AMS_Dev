@@ -158,8 +158,10 @@
 
 
 <script>
+    $("#btnhide").hide();
+    $(function () 
+    {
 
-    $(function (){
         $.ajax
             ({
                 method: "GET",
@@ -168,7 +170,8 @@
             })
             .done(function (msg) {
                 debugger;
-                if (msg == 1) {
+                if (msg == 1)
+                {
                     $("#btnhide").hide();
                 }
             });
