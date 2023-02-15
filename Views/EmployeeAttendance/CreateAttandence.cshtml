@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.Label("InTime", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">   
-                @Html.TextBoxFor(x => x.Intime, new { @class = "form-control", @Value = @DateTime.Now.ToShortTimeString(), required = "required", style = "width:260px", @readonly = "readonly" , Id = "TxtIntime" })
+                @Html.TextBoxFor(x => x.Intime, new { @class = "form-control", required = "required", style = "width:260px", @readonly = "readonly" , Id = "TxtIntime" })
                 @Html.ValidationMessageFor(model => model.Intime, "", new { @class = "text-danger" })
             </div>
             @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -137,9 +137,19 @@
 
 
 <script language="javascript">
+   
+    window.onload = function () {
+        debugger;
+        
+        var date = new Date().getHours();
+        var date1 = new Date().getMinutes();
+
+        document.getElementById("TxtIntime").value = (date < 9 ? "0" : "") + date + ":" + (date1 <= 9 ? "0" : "") + date1;;
+
+    }
 
     $('#TxtOuttime').change(function () {
-        debugger;
+       
         var start = $("#TxtIntime").val();
         var end = $("#TxtOuttime").val();
         start = start.split(":");
@@ -151,14 +161,14 @@
         diff -= hours * 1000 * 60 * 60;
         var minutes = Math.floor(diff / 1000 / 60);
 
-        var final = (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
+        var final = (hours < 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
         $("#Duration").val(final);
     });
     $('#EmpIdHide').hide();
 </script>
 <script>
     $('#TxtOuttime').change(function () {
-        debugger;
+     
         $("#TxtOuttime").next('.validation').hide();
         if ($("#TxtIntime").val() >= $("#TxtOuttime").val()) {
             $("#TxtOuttime").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Out time Should be greater than in time  </div>");
@@ -176,10 +186,10 @@
 
 
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
         $("#TxtIntime").change(function () {
-            debugger;
+       
 
             if ($("#TxtIntime").val() != null) {
                 $('#TxtOuttime').removeAttr("readonly")
@@ -189,4 +199,4 @@
             }
         });
     });
-</script>
+</script>*@

@@ -243,9 +243,8 @@
         <div class="col-md-3">
             @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", Id = "AltContactTxt", required = "required", maxlength = "10", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
             @Html.ValidationMessageFor(model => model.AlternateContact_No, "", new { style = "color:red " })
-          
+  
             <div id="AltdivMessage" style="color:red; font-weight:bold;">  @TempData["AltContact_No"]</div>
-
         </div>
 
         </div>

@@ -79,3 +79,4 @@ D:\GitHub\AMS_Dev\bin\Antlr3.Runtime.pdb
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.CopyComplete
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.dll
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.pdb
+D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.AssemblyReference.cache

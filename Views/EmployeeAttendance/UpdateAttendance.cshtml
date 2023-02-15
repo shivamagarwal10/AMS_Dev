@@ -50,12 +50,12 @@
                 @Html.ValidationMessageFor(model => model.Intime, "", new { @class = "text-danger" })
             </div>
             @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-3">
-       
+            <div class="col-md-3">
 
-            @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", @Value = @DateTime.Now.ToShortTimeString(), style = "width:260px", @readonly = "readonly", Id = "TxtOuttime", required = "required" })
-            @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
-        </div>
+
+                @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", style = "width:260px", @readonly = "readonly", Id = "TxtOuttime", required = "required" })
+                @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">
@@ -73,19 +73,19 @@
         <div class="form-group">
             @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly", required = "required" })
                 @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
             </div>
             @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @Value = @DateTime.Now.ToShortDateString(),style = "width:260px", @readonly = "readonly" })
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @Value = @DateTime.Now.ToShortDateString(), style = "width:260px", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-5 col-md-10">
-                 <input type="submit" value="Save" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;">
+                <input type="submit" value="Save" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;">
             </div>
         </div>
     </div>
@@ -96,12 +96,19 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
 <script language="javascript">
+    window.onload = function () {
+       
 
-    $('#TxtOuttime').ready(function () {
-        debugger;
+        var date = new Date().getHours();
+        var date1 = new Date().getMinutes();
+
+       
+        document.getElementById("TxtOuttime").value = (date < 9 ? "0" : "") + date + ":" + (date1 <= 9 ? "0" : "") + date1;
+
+ 
+      
         var start = $("#TxtIntime").val();
         var end = $("#TxtOuttime").val();
         start = start.split(":");
@@ -113,26 +120,30 @@
         diff -= hours * 1000 * 60 * 60;
         var minutes = Math.floor(diff / 1000 / 60);
 
-        var final = (hours < 9 ? "0" : "") + hours + ":" + (minutes < 9 ? "0" : "") + minutes;
+        var final = (hours < 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
 
         $("#Duration").val(final);
-    });
+
+        debugger;
+
+
+        if (final == "00:00")
+        {
+            $("#TxtOuttime").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Out time Should be greater than in time  </div>");
+
+            document.getElementById("Duration").value = "";
+        }
+        
+    };
 
     $('#EmpIdHide').hide();
 
 
 </script>
-<script>
-    $(document).ready(function () {
-        debugger;
-        if ($("#TxtIntime").val() >= $("#TxtOuttime").val()){
-            document.getElementById("TxtOuttime").value = "";
-        }   
-    });
-</script>
-<script>
+
+@*<script>
     $('#TxtOuttime').change(function () {
-       
+
         $("#TxtOuttime").next('.validation').hide();
         if ($("#TxtIntime").val() >= $("#TxtOuttime").val()) {
             $("#TxtOuttime").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Out time Should be greater than in time  </div>");
@@ -145,7 +156,7 @@
             $("#Duration").next('.validation').hide();
         }
     });
-</script>
+</script>*@
 <script>
 
     var x = document.getElementById("GetLatitude");
