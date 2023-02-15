@@ -67,6 +67,33 @@ namespace EmployeeAttendenceMangement.AMSConnecction
 
             return EmpAttandenceList;
         }
+        public int GetEmployeeId(int EmpAtendenceId, EmployeeAttandenceModel model)
+        {
+            connection();
+            DataTable dt = new DataTable();
+            SqlDataAdapter adp = new SqlDataAdapter();
+            SqlCommand cmd = new SqlCommand("select ea.EmpAtendenceId,ea.EmployeeId,ea.OutTime, c.FirstName,c.LastName From EmpAtendance as ea INNER JOIN Employee as c  on ea.EmployeeId =c.EmployeeId where ea.EmpAtendenceId = @EmpAtendenceId ", con);
+            cmd.Parameters.AddWithValue("@EmpAtendenceId", EmpAtendenceId);
+          
+
+            adp.SelectCommand = cmd;
+            adp.Fill(dt);
+            cmd.Dispose();
+            if (dt.Rows.Count > 0)
+            {
+                model.OutTime = (TimeSpan)((dt.Rows[0]["OutTime"]));
+                model.FirstName = Convert.ToString(dt.Rows[0]["FirstName"]); 
+                model.EmployeeId  = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
+                model.LastName = Convert.ToString(dt.Rows[0]["LastName"]);
+                return 1;
+            }
+            else
+            {
+                
+
+                return 0;
+            }
+        }
         public List<EmployeeAttandenceModel> GetMarkAttandence()
         {
             connection();
@@ -81,7 +108,6 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             DataTable dt = new DataTable();
             da.Fill(dt);
             con.Close();
-
 
 
             foreach (DataRow dr in dt.Rows)

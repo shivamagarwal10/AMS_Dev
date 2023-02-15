@@ -25,7 +25,7 @@ namespace EmployeeAttendenceMangement.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Date { get; set; }
 
-        
+        public string LastName { get; set; }
         public string FirstName { get; set; }
     }
 }

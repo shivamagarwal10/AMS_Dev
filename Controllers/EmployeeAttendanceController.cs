@@ -60,6 +60,27 @@ namespace EmployeeAttendenceMangement.Controllers
         public ActionResult UpdateAttendance(int EmpAtendenceId)
         {
             EmployeeAttandenceDateLayer EmpAttandence_layer = new EmployeeAttandenceDateLayer();
+            EmployeeAttandenceModel model = new EmployeeAttandenceModel();
+            int EmpAttendance = EmpAttandence_layer.GetEmployeeId(EmpAtendenceId,model);
+           
+            Session["AltlastName"] = model.LastName;
+            Session["AltEmployeeId"] = model.EmployeeId;
+            Session["AltFirstName"] = model.FirstName;
+            var outtime = model.OutTime;
+
+
+            var Data1 = outtime.ToString().Substring(0, 5);
+            if (Data1 == "00:00" )
+           {
+                Session["Outtime"] = null;
+
+           }
+            else
+            {
+                Session["Outtime"] = model.OutTime.ToString().Substring(0, 5);
+                 
+            }
+
 
             return View(EmpAttandence_layer.GetMarkAttandence().Find(Emp => Emp.EmpAtendenceId == EmpAtendenceId));
         }

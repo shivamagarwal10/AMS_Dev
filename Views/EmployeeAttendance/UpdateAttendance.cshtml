@@ -27,9 +27,10 @@
             @Html.Label("Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.HiddenFor(model => model.EmpAtendenceId)
-                @Html.TextBox("EmployeeId", Session["EmployeeId"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:250px", Id = "EmpIdHide" })
+                @Html.HiddenFor(model => model.EmployeeId)
+                @Html.TextBox("EmployeeId", Session["AltEmployeeId"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:250px", Id = "EmpIdHide" })
 
-                @Html.TextBox("FirstName", Session["FirstName"] + " " + Session["LastName"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "pId", required = "required", @readonly = "readonly" })
+                @Html.TextBox("FirstName", Session["AltFirstName"] + " " + Session["AltlastName"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "pId", required = "required", @readonly = "readonly" })
 
                 @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
             </div>
@@ -50,12 +51,17 @@
                 @Html.ValidationMessageFor(model => model.Intime, "", new { @class = "text-danger" })
             </div>
             @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-
-
-                @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", style = "width:260px", @readonly = "readonly", Id = "TxtOuttime", required = "required" })
-                @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
-            </div>
+        <div class="col-md-3">
+            @if (Session["Outtime"] == null)
+            {
+                @Html.TextBoxFor(x => x.OutTime, new { @class = "form-control", style = "width:260px", Id = "TxtOuttime", @readonly = "readonly", required = "required" })
+            }
+            else
+            {
+                @Html.TextBoxFor(x => x.OutTime, Session["Outtime"].ToString(), new { @class = "form-control", style = "width:260px", @readonly = "readonly", required = "required" });
+            }
+            @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
+        </div>
         </div>
 
         <div class="form-group">

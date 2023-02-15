@@ -81,7 +81,7 @@
         <div class="form-group">
             @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly"  })
                 @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
             </div>
             @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -95,7 +95,7 @@
         <div class="form-group">
             <div class="col-md-offset-5 col-md-10">
                 <input type="submit" value="Save" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;">
-                <p id="demo"></p>
+                
             </div>
         </div>
     </div>
@@ -163,6 +163,7 @@
 
         var final = (hours < 9 ? "0" : "") + hours + ":" + (minutes <= 9 ? "0" : "") + minutes;
         $("#Duration").val(final);
+
     });
     $('#EmpIdHide').hide();
 </script>
