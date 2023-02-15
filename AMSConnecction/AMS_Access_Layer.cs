@@ -199,12 +199,14 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         }
 
 
-        public int GetEmployeeId(EmployeeCreateModel model)
+        public String GetEmployeeId(EmployeeCreateModel model)
         {
             connection();
+           var CtxYear =  DateTime.Now.Year.ToString(); 
+
             DataTable dt = new DataTable();
             SqlDataAdapter adp = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand("select Top 1(EmployeeId) from Employee order by EmployeeId desc ", con);
+            SqlCommand cmd = new SqlCommand("SELECT EmployeeId FROM Employee WHERE EmployeeId LIKE '%"+ CtxYear + "%' ORDER BY EmployeeId DESC ", con);
             
             adp.SelectCommand = cmd;
             adp.Fill(dt);
@@ -213,11 +215,13 @@ namespace EmployeeAttendenceMangement.AMSConnecction
             {
                 model.EmployeeId  = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
 
-                return 1;
+                return "1";
             }
             else
             {
-                return 0;
+               
+
+                return "0";
             }
         }
        

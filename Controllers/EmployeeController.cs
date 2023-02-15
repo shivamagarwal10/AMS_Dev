@@ -56,18 +56,17 @@ namespace EmployeeAttendenceMangement.Controllers
             ViewBag.CountryList = CountryList();
          
             EmployeeCreateModel model = new EmployeeCreateModel();
-            int maxId = access_Layer.GetEmployeeId(model);
-            var data = model.EmployeeId;
-            var Data1 = data.ToString().Substring(0, 4);
-            if (Data1 != DateTime.Now.Year.ToString())
+            var maxId = access_Layer.GetEmployeeId(model);
+
+            if (maxId == "0")
             {
                 model.EmployeeId = Convert.ToInt32(DateTime.Now.Year.ToString() + "" + "000" + "" + (1).ToString());
             }
             else
             {
-                model.EmployeeId = model.EmployeeId+1;
-               
+                model.EmployeeId = model.EmployeeId + 1;
             }
+            
             if (Convert.ToBoolean(Session["Is_admin"]) == true)
             {
                 return View(model);
