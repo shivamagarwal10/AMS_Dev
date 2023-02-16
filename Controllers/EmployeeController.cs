@@ -300,7 +300,6 @@ namespace EmployeeAttendenceMangement.Controllers
                         ViewBag.Message = "Employee details added successfully";
                         return Redirect("Login");
                     }
-
                 }
                 TempData["msg"] = "No account found for this email. Retry  !!";
                 return View();
