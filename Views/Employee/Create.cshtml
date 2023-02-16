@@ -244,7 +244,7 @@
             @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", Id = "AltContactTxt", required = "required", maxlength = "10", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
             @Html.ValidationMessageFor(model => model.AlternateContact_No, "", new { style = "color:red " })
   
-            <div id="AltdivMessage" style="color:red; font-weight:bold;">  @TempData["AltContact_No"]</div>
+           
         </div>
 
         </div>
@@ -309,7 +309,7 @@
                 @Html.EditorFor(model => model.AlternateEmailId, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = " --Enter Your Emailid--", AutoPostBack = "true", Id = "onAltEmailCheck" } })
                 @Html.ValidationMessageFor(model => model.AlternateEmailId, "", new { style = "color:red " })
                
-                <div id="AltdivMessage" style="color:red; font-weight:bold;"></div>
+                <div id="AltdivMessage" style="color:red; font-weight:bold;">@TempData["AltEmailmsg"]</div>
                 @*<div class='validation' style='color:red;margin-bottom: 20px;'> @TempData["EmailValidation"] </div>*@
 
             </div>
@@ -335,43 +335,30 @@
 
 
 <script>
-    $('#onAltEmailCheck').change(function () {
+    $('#onAltEmailCheck').blur(function () {
         debugger;
-
         $("#onAltEmailCheck").next('.validation').hide();
 
         if ($("#onAltEmailCheck").val() == $("#onEmailCheck").val()) {
 
-            $("#onAltEmailCheck").after("<div class='validation' style='color:red;margin-bottom: 20px;'> Primary Contact Number and Alternate Contact Number should not be same,Type again ! </div>");
+            $("#AltdivMessage").html(" Primary EmailId  and Alternate EmailId should not be same,Type again !");
         }
         else {
-            $("#onAltEmailCheck").next('.validation').hide();
+           
+            $("#AltdivMessage").html("");
         }
     });
 </script>
+
 <script>
  
-
-    function getLocation()
-    {
-        if ($("#AltContactTxt").val() == $("#ContactTxt").val()) {
-
-            $("#AltContactTxt").after("<div class='validation' style='color:red;margin-bottom: 20px;'> Primary EmailId  and Alternate EmailId should not be same,Type again ! </div>");
-        }
-        else {
-            $("#AltContactTxt").next('.validation').hide();
-        }
-    }
-
-
-    
     $('#AltContactTxt').blur(function () {
         debugger;
 
         $("#AltContactTxt").next('.validation').hide();
 
         if ($("#AltContactTxt").val() == $("#ContactTxt").val()) {
-
+        
             $("#AltContactTxt").after("<div class='validation' style='color:red;margin-bottom: 20px;'> Primary Contact Number and Alternate Contact Number should not be same,Type again ! </div>");
         }
         else {
@@ -379,6 +366,7 @@
         }
     });
 </script>
+
 <script type="text/javascript">
     $(function () {
         $("#txtEmployeeId").hide();
@@ -401,7 +389,6 @@
         debugger;
         $("#onEmailCheck").blur(function () {
             var email = $("#onEmailCheck").val();
-
             $.ajax
                 ({
                     method: "POST",

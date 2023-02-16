@@ -144,7 +144,23 @@ namespace EmployeeAttendenceMangement.Controllers
                     AMS_Access_Layer access_Layer = new AMS_Access_Layer();
 
                  var date1= access_Layer.ValidatealtEmailId(Convert.ToString(model.AlternateEmailId));
-                       
+                 var ChkEmail = access_Layer.ValidateEmailId(Convert.ToString(model.AlternateEmailId));
+
+                    if(model.AlternateEmailId == model.EmailId)
+                    {
+                        TempData["AltEmailmsg"] = "Primary EmailId  and Alternate EmailId should not be same,Type again !";
+
+
+                        if (ChkEmail == 1)
+                        {
+
+                            TempData["EmailValidation"] = "EmailId all ready registered";
+                        }
+                        ViewBag.CountryList = CountryList();
+                        ViewBag.CountryList1 = GetStateByEmp(Convert.ToInt32(model.CountryId));
+                        return View(model);
+                    }
+                    
 
                     if (access_Layer.AddEmployee(model))
                     {
@@ -155,12 +171,6 @@ namespace EmployeeAttendenceMangement.Controllers
                 ViewBag.CountryList =CountryList();
                 ViewBag.CountryList1 = GetStateByEmp(Convert.ToInt32(model.CountryId));
                 TempData["EmailValidation"] = "EmailId all ready registered";
-
-               if( model.Contact_No == model.AlternateContact_No)
-                {
-                    TempData["AltContact_No"] = "Primary Contact Number and Alternate Contact Number should not be same,Type again !";
-                }
-                        
 
                 return View(model);
             }
