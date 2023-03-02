@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 namespace EmployeeAttendenceMangement.AMSConnecction
 {
@@ -229,8 +230,12 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         public bool AddEmployee(EmployeeCreateModel obj)
         {
             connection();
-
-          int ckhEmail=  ValidateEmailId(obj.EmailId);
+            string msg = "";
+            byte[] encode = new byte[obj.Password.Length];
+            encode = Encoding.UTF8.GetBytes(obj.Password);
+             msg = Convert.ToBase64String(encode);
+            string strpsd = msg;
+            int ckhEmail=  ValidateEmailId(obj.EmailId);
 
             if (ckhEmail > 0)
             {
@@ -258,8 +263,8 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 com.Parameters.AddWithValue("@StateId", obj.StateId);
                 com.Parameters.AddWithValue("@Marital_status", obj.Marital_status);
                 com.Parameters.AddWithValue("@Gender", obj.Gender);
-                com.Parameters.AddWithValue("@LastName", obj.LastName);
-                com.Parameters.AddWithValue("@Password", obj.Password);
+                com.Parameters.AddWithValue("@LastName", obj.LastName); 
+                com.Parameters.AddWithValue("@Password", strpsd);
                 com.Parameters.AddWithValue("@PinCode", obj.PinCode);
                 com.Parameters.AddWithValue("@AlternateContact_No", obj.AlternateContact_No);
                 com.Parameters.AddWithValue("@Contact_No", obj.Contact_No);
@@ -396,13 +401,20 @@ namespace EmployeeAttendenceMangement.AMSConnecction
         public bool GetLogin(EmployeeCreateModel obj1)
         {
             connection();
+            string msg = "";
+            byte[] encode = new byte[obj1.Password.Length];
+            encode = Encoding.UTF8.GetBytes(obj1.Password);
+            msg = Convert.ToBase64String(encode);
+            string strpsd = msg;
+
             DataTable dt = new DataTable();
 
             SqlDataAdapter adp = new SqlDataAdapter();
 
             try
             {
-                SqlCommand cmd = new SqlCommand("Select EmployeeId,FirstName,LastName,Is_Admin, Status from Employee where EmailId = @EmailId and  Password = @Password and Status = 'True'", con);
+                string query = "Select EmployeeId,FirstName,LastName,Is_Admin, Status from Employee where EmailId = @EmailId and Password = '" + strpsd + "'  and Status = 'True'";
+                SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@EmailId", obj1.EmailId.Trim());
                 cmd.Parameters.AddWithValue("@password", obj1.Password.Trim());
                 cmd.Parameters.AddWithValue("@Is_admin", obj1.Is_admin.ToString()); 
@@ -414,10 +426,9 @@ namespace EmployeeAttendenceMangement.AMSConnecction
                 {
                     obj1.FirstName = dt.Rows[0]["FirstName"].ToString();
                     obj1.LastName = dt.Rows[0]["LastName"].ToString();
-
                     obj1.Is_admin = Convert.ToBoolean(dt.Rows[0]["Is_admin"]);                    
                     obj1.EmployeeId = Convert.ToInt32(dt.Rows[0]["EmployeeId"]);
-
+ 
                     return true;
                 }
                 else

@@ -1,4 +1,5 @@
-﻿using EmployeeAttendenceMangement.AMSConnecction;
+﻿using DocumentFormat.OpenXml.Office.CustomXsn;
+using EmployeeAttendenceMangement.AMSConnecction;
 using EmployeeAttendenceMangement.Models;
 using PagedList;
 using System;
@@ -7,6 +8,8 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -146,7 +149,8 @@ namespace EmployeeAttendenceMangement.Controllers
                  var date1= access_Layer.ValidatealtEmailId(Convert.ToString(model.AlternateEmailId));
                  var ChkEmail = access_Layer.ValidateEmailId(Convert.ToString(model.AlternateEmailId));
 
-                    if(model.AlternateEmailId == model.EmailId)
+
+                    if (model.AlternateEmailId == model.EmailId)
                     {
                         TempData["AltEmailmsg"] = "Primary EmailId  and Alternate EmailId should not be same,Type again !";
 
@@ -320,6 +324,8 @@ namespace EmployeeAttendenceMangement.Controllers
 
             }
         }
+
+      
 
     }
 }

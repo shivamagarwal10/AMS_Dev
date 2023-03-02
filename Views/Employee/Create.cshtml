@@ -314,11 +314,11 @@
 
             </div>
             @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Password No--", Id = "txtPassword" } })
-                @Html.ValidationMessage("Password", "", new { style = "color:red " })
-                <div id="msgPassword" style="color:red; font-weight:bold;"></div>
-            </div>
+        <div class="col-md-3">
+            @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "     --Enter Your Password No--", Id = "txtPassword" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { style = "color:red " })
+            <div id="msgPassword" style="color:red; font-weight:bold;"></div>
+        </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-5 col-md-10">
@@ -334,6 +334,7 @@
 
 
 <script>
+
     $('#onAltEmailCheck').blur(function () {
         debugger;
         $("#onAltEmailCheck").next('.validation').hide();
@@ -342,7 +343,8 @@
 
             $("#AltdivMessage").html(" Primary EmailId  and Alternate EmailId should not be same,Type again !");
         }
-        else {
+        else
+        {
            
             $("#AltdivMessage").html("");
         }
@@ -509,14 +511,15 @@
 
 
         $("#txtPassword").change(function () {
+            debugger;
+            var Paswword = $("#txtPassword").val();
 
-
-            var email = $("#txtPassword").val();
             var paswd = /^[a-zA-Z0-9!#$%^&*]{6,16}$/;
-            if (paswd.test(email)) {
+            if (paswd.test(Paswword)) {
                 $("#msgPassword").html("password contain between 5 to 10 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
             }
-            else {
+            else
+            {
                 $("#msgPassword").html("");
 
             }
