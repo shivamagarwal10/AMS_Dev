@@ -6,140 +6,67 @@
         overflow: hidden;
     }
 
-    h3 {
-        padding: 10px;
-    }
+    
 </style>
 
 <style>
     body {
-        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: "Open Sans", sans-serif;
-        color: #333333;
+        background-image: url('../../bg/bg (3).jpg');
+    }
+    form {
+        box-shadow: 2px 6px 100px gray;
+        border-radius: 10px 50px;
+        border: 1px solid black;
+        padding-top: 10px
     }
 
-    .box-form {
-        margin: 0 auto;
-        width: 80%;
-        background: #FFFFFF;
-        border-radius: 10px;
-        overflow: hidden;
-        display: flex;
-        flex: 1 1 100%;
-        align-items: stretch;
-        justify-content: space-between;
-        box-shadow: 0 0 20px 6px #090b6f85;
+    .txt_right {
+        margin-left: 20px;
+    }
+
+    .main-container {
+        height: auto;
+        margin-top: 10px;
+    }
+
+    .zoom:hover {
+        -ms-transform: scale(1.1); /* IE 9 */
+        -webkit-transform: scale(1); /* Safari 3-8 */
+        transform: scale(1.1);
+        transition: 0.5s;
+    }
+
+    #text {
+        float: left;
+        width: 100px;
     }
 
 
+    select {
+        width: 200px;
+        height: 29px;
+        border-radius: 3px;
+        border: 1px solid #CCC;
+        font-weight: 200;
+        font-size: 15px;
+        font-family: Verdana;
+        box-shadow: 1px 1px 5px #CCC;
+    }
 
-
-        .box-form div {
-            height: auto;
+        select: hover {
+            width: 200px;
+            height: 29px;
+            border-radius: 3px;
+            border: 1px solid #CCC;
+            font-weight: 200;
+            font-size: 15px;
+            font-family: Verdana;
+            box-shadow: 1px 1px 5px #CCC;
         }
 
-        .box-form .left {
-            color: #FFFFFF;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-image: url("https://i.pinimg.com/736x/5d/73/ea/5d73eaabb25e3805de1f8cdea7df4a42--tumblr-backgrounds-iphone-phone-wallpapers-iphone-wallaper-tumblr.jpg");
-            overflow: hidden;
-        }
-
-            .box-form .left .overlay {
-                padding: 30px;
-                width: 100%;
-                height: 100%;
-                background: #5961f9ad;
-                overflow: hidden;
-                box-sizing: border-box;
-            }
-
-                .box-form .left .overlay h1 {
-                    font-size: 10vmax;
-                    line-height: 1;
-                    font-weight: 900;
-                    margin-top: 40px;
-                    margin-bottom: 20px;
-                }
-
-                .box-form .left .overlay span p {
-                    margin-top: 30px;
-                    font-weight: 900;
-                }
-
-                .box-form .left .overlay span a {
-                    background: #3b5998;
-                    color: #FFFFFF;
-                    margin-top: 10px;
-                    padding: 14px 50px;
-                    border-radius: 100px;
-                    display: inline-block;
-                    box-shadow: 0 3px 6px 1px #042d4657;
-                }
-
-                    .box-form .left .overlay span a:last-child {
-                        background: #1dcaff;
-                        margin-left: 30px;
-                    }
-
-        .box-form .right {
-            padding: 40px;
-            overflow: hidden;
-        }
-
-
-            .box-form .right h5 {
-                font-size: 6vmax;
-                line-height: 0;
-            }
-
-            .box-form .right p {
-                font-size: 14px;
-                color: #B0B3B9;
-            }
-
-            .box-form .right .inputs {
-                overflow: hidden;
-            }
-
-            .box-form .right input {
-                width: 100%;
-                padding: 10px;
-                margin-top: 25px;
-                font-size: 16px;
-                border: none;
-                outline: none;
-                border-bottom: 2px solid #B0B3B9;
-            }
-
-            .box-form .right .remember-me--forget-password {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-                .box-form .right .remember-me--forget-password input {
-                    margin: 0;
-                    margin-right: 7px;
-                    width: auto;
-                }
-
-            .box-form .right button {
-                float: right;
-                color: #fff;
-                font-size: 16px;
-                padding: 12px 35px;
-                border-radius: 50px;
-                display: inline-block;
-                border: 0;
-                outline: 0;
-                box-shadow: 0px 4px 20px 0px #49c628a6;
-                background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
-            }
+    .reg {
+        margin-left: 40px;
+    }
 </style>
 
 
@@ -155,12 +82,35 @@
         color: red;
     }
 </style>
-<h3> Employee Registration</h3>
-<hr />
+
+
+<div class="header">
+
+    <h1> Employee Registration </h1>
+    <br />
+
+</div>
+
+
+<style>
+    div.header {
+        background-color: black;
+       
+    }
+
+    h1 {
+        color: white;
+        text-align: center;
+        margin-top: 18px;
+    }
+    </style>
+
+
+
 @using (Html.BeginForm("Create", "Employee", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal ">
+    <div class="form-horizontal " >
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -243,8 +193,8 @@
         <div class="col-md-3">
             @Html.EditorFor(model => model.AlternateContact_No, new { htmlAttributes = new { @class = "form-control", Id = "AltContactTxt", required = "required", maxlength = "10", placeholder = "     --Enter Your Alternate No--", onkeypress = "return isNumberKey(event)" } })
             @Html.ValidationMessageFor(model => model.AlternateContact_No, "", new { style = "color:red " })
-  
-           
+
+
         </div>
 
         </div>
@@ -308,7 +258,7 @@
             <div class="col-md-3">
                 @Html.EditorFor(model => model.AlternateEmailId, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = " --Enter Your Emailid--", AutoPostBack = "true", Id = "onAltEmailCheck" } })
                 @Html.ValidationMessageFor(model => model.AlternateEmailId, "", new { style = "color:red " })
-               
+
                 <div id="AltdivMessage" style="color:red; font-weight:bold;">@TempData["AltEmailmsg"]</div>
                 @*<div class='validation' style='color:red;margin-bottom: 20px;'> @TempData["EmailValidation"] </div>*@
 
@@ -321,8 +271,8 @@
         </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-5 col-md-10">
-                <input type="submit" value="save" class="btn btn-success" id="submitButton" />
+            <div class="col-md-8 " style="margin-left: 430px;">
+                <input type="submit" value="save" class="col-md-4 btn btn-primary " id="submitButton" />
             </div>
         </div>
     </div>
@@ -345,21 +295,21 @@
         }
         else
         {
-           
+
             $("#AltdivMessage").html("");
         }
     });
 </script>
 
 <script>
- 
+
     $('#AltContactTxt').blur(function () {
         debugger;
 
         $("#AltContactTxt").next('.validation').hide();
 
         if ($("#AltContactTxt").val() == $("#ContactTxt").val()) {
-        
+
             $("#AltContactTxt").after("<div class='validation' style='color:red;margin-bottom: 20px;'> Primary Contact Number and Alternate Contact Number should not be same,Type again ! </div>");
         }
         else {

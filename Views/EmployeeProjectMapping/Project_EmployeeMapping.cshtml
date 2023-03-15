@@ -40,7 +40,7 @@
         @Html.ValidationSummary(true, "ModelOnly", new { @class = "text-danger" })
     <div class="form-group">
         @Html.HiddenFor(model => model.Emp_Project_Mapping_Id)
-        @Html.Label("ProjectName", htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.Label("Project Name", htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-offset-4">
 
             @Html.DropDownList("Project_Id", new SelectList(ViewBag.ProjectLists, "Project_Id", "ProjectName"), "---Select Project Name---", htmlAttributes: new { @class = "form-control", @style = "width:460px ;height:45px;", Id = "Pid", required = "required" })

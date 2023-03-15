@@ -168,7 +168,7 @@
 
 <h2>Project Master </h2>
 
-<p>
+<p style="text-align: left;">
     <button type="submit" class="btn-btn-primary">@Html.ActionLink("Create Project", "CreateProject")</button>
 </p>
 
@@ -184,7 +184,6 @@
         </th>
         <th>
             Project Code
-
         </th>
         <th>
             Action
@@ -213,7 +212,7 @@
 </table>
 
 @using (Html.BeginForm("ProjectDetail", "ProjectMaster", FormMethod.Get, new { id = "form1" }))
-    
+
 {
     <div id='Paging' style="padding-left:450px">
 

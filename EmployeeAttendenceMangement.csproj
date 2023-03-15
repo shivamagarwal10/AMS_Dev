@@ -167,6 +167,7 @@
     <Content Include="assets\css\login.css" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\img\about.jpg" />
+    <Content Include="assets\img\bg\bg.jpg" />
     <Content Include="assets\img\emp.jpg" />
     <Content Include="assets\img\favicon.png" />
     <Content Include="assets\img\hr.jpg" />
@@ -220,6 +221,7 @@
     <Content Include="assets\vendor\swiper\swiper-bundle.min.css" />
     <Content Include="assets\vendor\swiper\swiper-bundle.min.js" />
     <Content Include="assets\vendor\waypoints\noframework.waypoints.js" />
+    <Content Include="bg\bg %283%29.jpg" />
     <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-3.3.6-dist\css\bootstrap.css" />

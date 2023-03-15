@@ -91,12 +91,14 @@
                 line-height: 0;
             }
 
-            .box-form .right p {
+            .box-form .right p 
+            {
                 font-size: 14px;
                 color: #B0B3B9;
             }
 
-            .box-form .right .inputs {
+            .box-form .right .inputs 
+            {
                 overflow: hidden;
             }
 
@@ -170,8 +172,8 @@
 
 @if (Convert.ToBoolean(Session["Is_admin"]) == true)
 {
-    <p>
-        <button type="submit" class="btn-btn-primary"> @Html.ActionLink("Create  Employee", "Create")</button>
+    <p style="text-align: left;">
+        <button type="submit" class="btn-btn-primary">@Html.ActionLink("Create  Employee", "Create")</button>
     </p>
 }
 else

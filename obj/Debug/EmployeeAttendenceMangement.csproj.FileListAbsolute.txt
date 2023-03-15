@@ -39,7 +39,6 @@ D:\Ranjan\EmployeeAttendenceMangement\obj\Debug\EmployeeAttendenceMangement.cspr
 D:\Ranjan\EmployeeAttendenceMangement\obj\Debug\EmployeeAttendenceMangement.csproj.CopyComplete
 D:\Ranjan\EmployeeAttendenceMangement\obj\Debug\EmployeeAttendenceMangement.dll
 D:\Ranjan\EmployeeAttendenceMangement\obj\Debug\EmployeeAttendenceMangement.pdb
-D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.CoreCompileInputs.cache
 D:\GitHub\AMS_Dev\bin\EmployeeAttendenceMangement.dll.config
 D:\GitHub\AMS_Dev\bin\EmployeeAttendenceMangement.dll
 D:\GitHub\AMS_Dev\bin\EmployeeAttendenceMangement.pdb
@@ -76,6 +75,7 @@ D:\GitHub\AMS_Dev\bin\System.Web.WebPages.Deployment.xml
 D:\GitHub\AMS_Dev\bin\System.Web.WebPages.Razor.xml
 D:\GitHub\AMS_Dev\bin\Newtonsoft.Json.xml
 D:\GitHub\AMS_Dev\bin\Antlr3.Runtime.pdb
+D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.CoreCompileInputs.cache
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.csproj.CopyComplete
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.dll
 D:\GitHub\AMS_Dev\obj\Debug\EmployeeAttendenceMangement.pdb
