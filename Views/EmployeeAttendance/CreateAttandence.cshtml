@@ -1,8 +1,90 @@
 ﻿@model EmployeeAttendenceMangement.Models.EmployeeAttandenceModel
 
+    
+
+<div class="header">
+
+    <h1>Employee Attendance </h1>
+
+</div>
 <style>
+    form {
+        margin-top: 60px;
+        box-shadow: 2px 6px 50px gray;
+        border-radius: 10px 40px;
+        border: 1px solid black;
+        padding-top: 10px;
+        padding-left: 60px;
+    }
+
+    .txt_right {
+        margin-left: 20px;
+    }
+
+    .main-container {
+        height: auto;
+        margin-top: 10px;
+    }
+
+    .zoom:hover {
+        -ms-transform: scale(1.1); /* IE 9 */
+        -webkit-transform: scale(1); /* Safari 3-8 */
+        transform: scale(1.1);
+        transition: 0.5s;
+    }
+
+    #text {
+        float: left;
+        width: 100px;
+    }
+
+
+    select {
+        width: 200px;
+        height: 29px;
+        border-radius: 3px;
+        border: 1px solid #CCC;
+        font-weight: 200;
+        font-size: 15px;
+        font-family: Verdana;
+        box-shadow: 1px 1px 5px #CCC;
+    }
+
+        select: hover {
+            width: 200px;
+            height: 29px;
+            border-radius: 3px;
+            border: 1px solid #CCC;
+            font-weight: 200;
+            font-size: 15px;
+            font-family: Verdana;
+            box-shadow: 1px 1px 5px #CCC;
+        }
+
+    .reg {
+        margin-left: 40px;
+    }
+</style>
+
+
+<style>
+    div.header {
+        background-color: black;
+        padding-bottom: 10px;
+    }
+
     body {
-        background-image: linear-gradient(135deg, #FAB2FF 10%, #1904E5 100%);
+        background-color: #fcfafa;
+    }
+
+    .form-horizontal {
+        overflow: hidden;
+    }
+
+    h1 {
+        color: white;
+        text-align: center;
+        margin-top: 18px;
     }
 </style>
 
@@ -12,9 +94,7 @@
         overflow: hidden;
     }
 
-    h3 {
-        padding: 10px;
-    }
+
 
     .control-label:after {
         content: " *";
@@ -23,82 +103,81 @@
     }
 </style>
 
-<h3>Employee Attendance</h3>
+
 
 @using (Html.BeginForm("CreateAttandence", "EmployeeAttendance", FormMethod.Post))
 {
-    <hr />
+  <br />
+
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
 
-            @Html.Label("Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-
-                @Html.TextBox("EmployeeId", Session["EmployeeId"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:250px", Id = "EmpIdHide" })
-                @Html.TextBox("EmployeeId", Session["FirstName"].ToString() + " " + Session["LastName"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "pId", required = "required", @readonly = "readonly" })
-
-            </div>
-            @*@Html.Label("Project Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-
-                    @Html.DropDownList("projectId", ViewBag.Emp_Project_Mapping as SelectList, "--Select Project--", htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "Empid" })
-
-                    @Html.ValidationMessageFor(model => model.projectId, "", new { @class = "text-danger" })
-                </div>*@
-        </div>
-
-        <div class="form-group">
-            @Html.Label("InTime", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">   
-                @Html.TextBoxFor(x => x.Intime, new { @class = "form-control", required = "required", style = "width:260px", @readonly = "readonly" , Id = "TxtIntime" })
-                @Html.ValidationMessageFor(model => model.Intime, "", new { @class = "text-danger" })
-            </div>
-            @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-3">
-            @Html.EditorFor(model => model.OutTime, new { htmlAttributes = new { @class = "form-control", Id = "TxtOuttime", @readonly = "readonly", @Value = "00:00" } })
-     
-        </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Latitude", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBox("EmployeeId", Session["EmployeeId"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:250px", Id = "EmpIdHide" })
+            @Html.TextBox("EmployeeId", Session["FirstName"].ToString() + " " + Session["LastName"].ToString(), htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "pId", required = "required", @readonly = "readonly" })
+
+        </div>
+        @*@Html.Label("Project Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
 
-                @Html.EditorFor(model => model.latitude, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "GetLatitudee", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.latitude, "", new { @class = "text-danger" })
-                <p id="demo"></p>
-            </div>
-            @Html.Label("Longitude", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.EditorFor(model => model.longitude, new { htmlAttributes = new { @class = "form-control", required = "required", Id = "GetLongitudee", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.longitude, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly"  })
-                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
-            </div>
-            @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-3">
-                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @Value = @DateTime.Now.ToShortDateString(), style = "width:260px", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                @Html.DropDownList("projectId", ViewBag.Emp_Project_Mapping as SelectList, "--Select Project--", htmlAttributes: new { @class = "form-control", @style = "width:260px", Id = "Empid" })
 
-            </div>
-        </div>
+                @Html.ValidationMessageFor(model => model.projectId, "", new { @class = "text-danger" })
+            </div>*@
+    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;">
-                
-            </div>
+    <div class="form-group">
+        @Html.Label("InTime", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(x => x.Intime, new { @class = "form-control", required = "required", style = "width:260px", @readonly = "readonly", Id = "TxtIntime" })
+            @Html.ValidationMessageFor(model => model.Intime, "", new { @class = "text-danger" })
+        </div>
+        @Html.Label("OutTime", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.OutTime, new { htmlAttributes = new { @class = "form-control", style = "width:260px", Id = "TxtOuttime", @readonly = "readonly", @Value = "00:00" } })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.Label("Latitude", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+
+            @Html.EditorFor(model => model.latitude, new { htmlAttributes = new { @class = "form-control", required = "required", style = "width:260px", Id = "GetLatitudee", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.latitude, "", new { @class = "text-danger" })
+            <p id="demo"></p>
+        </div>
+        @Html.Label("Longitude", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.longitude, new { htmlAttributes = new { @class = "form-control", required = "required", style = "width:260px", Id = "GetLongitudee", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.longitude, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Duration", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.Duration, new { @class = "form-control", id = "Duration", style = "width:260px", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+        </div>
+        @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @Value = @DateTime.Now.ToShortDateString(), style = "width:260px", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-8 " style="margin-left: 410px;">
+            <input type="submit" value="save" class="col-md-4 btn btn-primary " id="submitButton" />
+        </div>
+    </div>
+</div>
 }
 
 <script type="text/javascript">
@@ -137,10 +216,10 @@
 
 
 <script language="javascript">
-   
+
     window.onload = function () {
         debugger;
-        
+
         var date = new Date().getHours();
         var date1 = new Date().getMinutes();
 
@@ -149,7 +228,7 @@
     }
 
     $('#TxtOuttime').change(function () {
-       
+
         var start = $("#TxtIntime").val();
         var end = $("#TxtOuttime").val();
         start = start.split(":");
@@ -169,7 +248,7 @@
 </script>
 <script>
     $('#TxtOuttime').change(function () {
-     
+
         $("#TxtOuttime").next('.validation').hide();
         if ($("#TxtIntime").val() >= $("#TxtOuttime").val()) {
             $("#TxtOuttime").after("<div class='validation' style='color:red;margin-bottom: 20px;'>Out time Should be greater than in time  </div>");
@@ -188,16 +267,16 @@
 
 
 @*<script type="text/javascript">
-    $(document).ready(function () {
-        $("#TxtIntime").change(function () {
-       
+        $(document).ready(function () {
+            $("#TxtIntime").change(function () {
 
-            if ($("#TxtIntime").val() != null) {
-                $('#TxtOuttime').removeAttr("readonly")
-            }
-            else {
-                $('#TxtOuttime').attr('readonly', true);
-            }
+
+                if ($("#TxtIntime").val() != null) {
+                    $('#TxtOuttime').removeAttr("readonly")
+                }
+                else {
+                    $('#TxtOuttime').attr('readonly', true);
+                }
+            });
         });
-    });
-</script>*@
+    </script>*@
